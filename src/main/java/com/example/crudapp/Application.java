@@ -3,7 +3,7 @@ package com.example.crudapp;
 
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.MainMenuCommand;
-import com.example.crudapp.entites.User;
+import com.example.crudapp.entites.user.User;
 import com.example.crudapp.factories.ServiceFactory;
 
 import java.util.Scanner;

@@ -2,7 +2,7 @@ package com.example.crudapp.commands.user;
 
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
-import com.example.crudapp.entites.User;
+import com.example.crudapp.entites.user.User;
 
 
 import java.util.Scanner;
@@ -27,14 +27,14 @@ public class UpdateUserCommand implements Command {
                 System.out.println("Текущие данные: " + user);
                 System.out.print("Введите новое имя (или Enter для пропуска): ");
                 String name = scanner.nextLine();
-                if (!name.isEmpty()) {
-                    user.setName(name);
-                }
-                System.out.print("Введите новый email (или Enter для пропуска): ");
-                String email = scanner.nextLine();
-                if (!email.isEmpty()) {
-                    user.setEmail(email);
-                }
+//                if (!name.isEmpty()) {
+//                    user.setName(name);
+//                }
+//                System.out.print("Введите новый email (или Enter для пропуска): ");
+//                String email = scanner.nextLine();
+//                if (!email.isEmpty()) {
+//                    user.setEmail(email);
+//                }
                 userService.update(user);
                 System.out.println("Пользователь обновлен");
             } else {

@@ -2,7 +2,7 @@ package com.example.crudapp.repositories.inmemory;
 
 
 import com.example.crudapp.api.DAO;
-import com.example.crudapp.entites.User;
+import com.example.crudapp.entites.user.User;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

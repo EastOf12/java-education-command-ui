@@ -1,20 +1,28 @@
-package com.example.crudapp.commands.user;
+package com.example.crudapp.commands.passenger;
 
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
+import com.example.crudapp.entites.passanger.Passenger;
+import com.example.crudapp.entites.trip.Trip;
 import com.example.crudapp.entites.user.User;
-
 
 import java.util.Scanner;
 
-
-public class UserMenuCommand implements Command {
+public class PassengerMenuCommand implements Command {
+    private final Service<Passenger> passengerService;
     private final Service<User> userService;
+    private final Service<Trip> tripService;
     private final Scanner scanner;
     private boolean running = true;
 
-    public UserMenuCommand(Service<User> userService, Scanner scanner) {
+    public PassengerMenuCommand(
+            Service<Passenger> passengerService,
+            Service<User> userService,
+            Service<Trip> tripService,
+            Scanner scanner) {
+        this.tripService = tripService;
         this.userService = userService;
+        this.passengerService = passengerService;
         this.scanner = scanner;
     }
 
@@ -34,12 +42,12 @@ public class UserMenuCommand implements Command {
     }
 
     private void showMenu() {
-        System.out.println("\n=== Меню пользователей ===");
-        System.out.println("1. Показать всех пользователей");
-        System.out.println("2. Создать пользователя");
-        System.out.println("3. Просмотреть пользователя");
-        System.out.println("4. Обновить пользователя");
-        System.out.println("5. Удалить пользователя");
+        System.out.println("\n=== Меню поездок ===");
+        System.out.println("1. Показать всех пассажиров");
+        System.out.println("2. Создать пассажира");
+        System.out.println("3. Просмотреть пассажира");
+        System.out.println("4. Обновить пассажира");
+        System.out.println("5. Удалить пассажира");
         System.out.println("0. Назад в главное меню");
         System.out.print("Выберите пункт: ");
     }
@@ -55,19 +63,19 @@ public class UserMenuCommand implements Command {
     private void handleChoice(int choice) {
         switch (choice) {
             case 1:
-                new ListUsersCommand(userService).execute();
+                new ListPassengerCommand(passengerService).execute();
                 break;
             case 2:
-                new CreateUserCommand(userService, scanner).execute();
+                new CreatePassengerCommand(passengerService, userService, tripService, scanner).execute();
                 break;
             case 3:
-                new ReadUserCommand(userService, scanner).execute();
+                new ReadPassengerCommand(passengerService, scanner).execute();
                 break;
             case 4:
-                new UpdateUserCommand(userService, scanner).execute();
+                new UpdatePassengerCommand(passengerService, scanner).execute();
                 break;
             case 5:
-                new DeleteUserCommand(userService, scanner).execute();
+                new DeletePassengerCommand(passengerService, scanner).execute();
                 break;
             case 0:
                 running = false;

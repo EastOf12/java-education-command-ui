@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7402fc0f-d406-48d3-bbe3-89ff50607758" name="Changes" comment="Добавил CRUD и базовые Entity">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/MainMenuCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/MainMenuCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/CreateUserCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/CreateUserCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/DeleteUserCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/DeleteUserCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/ListUsersCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/ListUsersCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/ReadUserCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/ReadUserCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/UpdateUserCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/UpdateUserCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/UserMenuCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/UserMenuCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/factories/ServiceFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/factories/ServiceFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/repositories/inmemory/InMemoryUserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/repositories/inmemory/InMemoryUserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/services/UserService.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="AddUserService" />
+        <entry key="$PROJECT_DIR$" value="Develop" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;EastOf12&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/EastOf12/java-education-command-ui2.git&quot;,
+    &quot;accountId&quot;: &quot;2acb6435-392c-4064-8c73-266f61997329&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="334B6tcESSXitJ1jcHTc5ki3z9p" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Application.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "addCRUD",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Борис/Desktop/java-education-command-ui2"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Борис\Desktop\java-education-command-ui\src\main\java\com\example\crudapp\commands\passenger" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7402fc0f-d406-48d3-bbe3-89ff50607758" name="Changes" comment="" />
+      <created>1758566292772</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1758566292772</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Первый коммит">
+      <option name="closed" value="true" />
+      <created>1759581084995</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1759581084995</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Добавил CRUD и базовые Entity">
+      <option name="closed" value="true" />
+      <created>1759676964702</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1759676964702</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Первый коммит" />
+    <MESSAGE value="Добавил CRUD и базовые Entity" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавил CRUD и базовые Entity" />
+  </component>
+</project>

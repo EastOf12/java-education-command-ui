@@ -1,0 +1,179 @@
+package com.example.crudapp.entites.user;
+
+
+import com.example.crudapp.api.Entity;
+import com.example.crudapp.entites.car.Car;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+public class User extends Entity {
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    private Gender gender;
+    private LocalDate birthday;
+    private LocalDateTime createdDate;
+    private UserRole role;
+    private UserContacts userContacts;
+    private UserAuth userAuth;
+    private Car car;
+
+    public User() {
+    }
+
+    public User(
+            String firstName,
+            String midleName,
+            String lastName,
+            Gender gender,
+            LocalDate birthday,
+            LocalDateTime createdDate,
+            UserRole role,
+            UserContacts userContacts,
+            UserAuth userAuth) {
+        this.firstName = firstName;
+        this.middleName = midleName;
+        this.gender = gender;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.createdDate = createdDate;
+        this.role = role;
+        this.userContacts = userContacts;
+        this.userAuth = userAuth;
+    }
+
+    //Геттеры
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public UserContacts getUserContacts() {
+        return userContacts;
+    }
+
+    public UserAuth getUserAuth() {
+        return userAuth;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+
+    //Сеттеры
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    public void setUserContacts(UserContacts userContacts) {
+        this.userContacts = userContacts;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public void setUserAuth(UserAuth userAuth) {
+        this.userAuth = userAuth;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+        return Objects.equals(firstName, user.firstName) &&
+                        Objects.equals(middleName, user.middleName) &&
+                        Objects.equals(lastName, user.lastName) && gender == user.gender &&
+                        Objects.equals(birthday, user.birthday) &&
+                        Objects.equals(createdDate, user.createdDate) &&
+                        Objects.equals(role, user.role) &&
+                        Objects.equals(userContacts, user.userContacts) &&
+                        Objects.equals(userAuth, user.userAuth) &&
+                        Objects.equals(car, user.car);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hashCode(firstName);
+        result = 31 * result + Objects.hashCode(middleName);
+        result = 31 * result + Objects.hashCode(lastName);
+        result = 31 * result + Objects.hashCode(gender);
+        result = 31 * result + Objects.hashCode(birthday);
+        result = 31 * result + Objects.hashCode(createdDate);
+        result = 31 * result + Objects.hashCode(role);
+        result = 31 * result + Objects.hashCode(userContacts);
+        result = 31 * result + Objects.hashCode(userAuth);
+        result = 31 * result + Objects.hashCode(car);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender=" + gender +
+                ", birthday=" + birthday +
+                ", createdDate=" + createdDate +
+                ", role=" + role +
+                ", userContacts=" + userContacts +
+                ", userAuth=" + userAuth +
+                ", car=" + car +
+                ", id=" + id +
+                '}';
+    }
+}
+

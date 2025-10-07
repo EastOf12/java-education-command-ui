@@ -1,20 +1,21 @@
-package com.example.crudapp.commands.user;
+package com.example.crudapp.commands.trip;
 
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
+import com.example.crudapp.entites.trip.Trip;
 import com.example.crudapp.entites.user.User;
-
 
 import java.util.Scanner;
 
-
-public class UserMenuCommand implements Command {
+public class TripMenuCommand implements Command {
+    private final Service<Trip> tripService;
     private final Service<User> userService;
     private final Scanner scanner;
     private boolean running = true;
 
-    public UserMenuCommand(Service<User> userService, Scanner scanner) {
+    public TripMenuCommand(Service<Trip> tripService, Service<User> userService, Scanner scanner) {
         this.userService = userService;
+        this.tripService = tripService;
         this.scanner = scanner;
     }
 
@@ -34,12 +35,12 @@ public class UserMenuCommand implements Command {
     }
 
     private void showMenu() {
-        System.out.println("\n=== Меню пользователей ===");
-        System.out.println("1. Показать всех пользователей");
-        System.out.println("2. Создать пользователя");
-        System.out.println("3. Просмотреть пользователя");
-        System.out.println("4. Обновить пользователя");
-        System.out.println("5. Удалить пользователя");
+        System.out.println("\n=== Меню поездок ===");
+        System.out.println("1. Показать все поездки");
+        System.out.println("2. Создать поездку");
+        System.out.println("3. Просмотреть поездку");
+        System.out.println("4. Обновить поездку");
+        System.out.println("5. Удалить поездку");
         System.out.println("0. Назад в главное меню");
         System.out.print("Выберите пункт: ");
     }
@@ -55,19 +56,19 @@ public class UserMenuCommand implements Command {
     private void handleChoice(int choice) {
         switch (choice) {
             case 1:
-                new ListUsersCommand(userService).execute();
+                new ListTripCommand(tripService).execute();
                 break;
             case 2:
-                new CreateUserCommand(userService, scanner).execute();
+                new CreateTripCommand(tripService, userService, scanner).execute();
                 break;
             case 3:
-                new ReadUserCommand(userService, scanner).execute();
+                new ReadTripCommand(tripService, scanner).execute();
                 break;
             case 4:
-                new UpdateUserCommand(userService, scanner).execute();
+                new UpdateTripCommand(tripService, userService, scanner).execute();
                 break;
             case 5:
-                new DeleteUserCommand(userService, scanner).execute();
+                new DeleteTripCommand(tripService, scanner).execute();
                 break;
             case 0:
                 running = false;
