@@ -45,24 +45,26 @@ public class CreateUserCommand implements Command {
         String password = scanner.nextLine();
         UserAuth userAuth = new UserAuth(password, LocalDateTime.now());
 
-        System.out.print("Введите дату рождения (дд/мм/гггг): ");
+        System.out.print("Введите дату рождения (dd/MM/yyyy): ");
         String input = scanner.nextLine();
 
         // Определение формата даты
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("дд/мм/гггг");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate birthday = null;
 
-        try {
-            // Преобразование введённой строки в LocalDate
-            birthday = LocalDate.parse(input, formatter);
+        while (birthday == null) {
+            try {
+                // Преобразование введённой строки в LocalDate
+                birthday = LocalDate.parse(input, formatter);
 
-            // Дальнейшая работа с объектом birthday, если нужно
-        } catch (DateTimeParseException e) {
-            System.out.println("Ошибка: неверный формат даты. Пожалуйста, введите дату в формате дд/мм/гггг.");
+                // Дальнейшая работа с объектом birthday, если нужно
+            } catch (DateTimeParseException e) {
+                System.out.println("Ошибка: неверный формат даты. Пожалуйста, введите дату в формате dd/MM/yyyy.");
+            }
         }
 
         User user = new User(
-            firstName,
+                firstName,
                 middleName,
                 lastName,
                 gender,
@@ -71,7 +73,7 @@ public class CreateUserCommand implements Command {
                 new UserRole("public"),
                 userContacts,
                 userAuth
-                );
+        );
 
         userService.save(user);
         System.out.println("Пользователь создан с ID: " + user.getId());

@@ -1,7 +1,5 @@
 package com.example.crudapp.entites.trip;
 
-import com.example.crudapp.api.Entity;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -31,30 +29,29 @@ public class TripLegs {
         return departure;
     }
 
-    public String getArrival() {
-        return arrival;
-    }
-
-    public LocalDateTime getDepartureDateTime() {
-        return departureDateTime;
-    }
-
-    public LocalDateTime getArrivalDateTime() {
-        return arrivalDateTime;
-    }
-
-
     //Сеттеры
     public void setDeparture(String departure) {
         this.departure = departure;
+    }
+
+    public String getArrival() {
+        return arrival;
     }
 
     public void setArrival(String arrival) {
         this.arrival = arrival;
     }
 
+    public LocalDateTime getDepartureDateTime() {
+        return departureDateTime;
+    }
+
     public void setDepartureDateTime(LocalDateTime departureDateTime) {
         this.departureDateTime = departureDateTime;
+    }
+
+    public LocalDateTime getArrivalDateTime() {
+        return arrivalDateTime;
     }
 
     public void setArrivalDateTime(LocalDateTime arrivalDateTime) {

@@ -33,46 +33,45 @@ public class Passenger extends Entity {
         return user;
     }
 
-    public PassengerStatus getPassengerStatus() {
-        return passengerStatus;
-    }
-
-    public Trip getTrip() {
-        return trip;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public int getSeats() {
-        return seats;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-
     //Сеттеры
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public PassengerStatus getPassengerStatus() {
+        return passengerStatus;
     }
 
     public void setPassengerStatus(PassengerStatus passengerStatus) {
         this.passengerStatus = passengerStatus;
     }
 
+    public Trip getTrip() {
+        return trip;
+    }
+
     public void setTrip(Trip trip) {
         this.trip = trip;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
+    public int getSeats() {
+        return seats;
+    }
+
     public void setSeats(int seats) {
         this.seats = seats;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public void setMessage(String message) {

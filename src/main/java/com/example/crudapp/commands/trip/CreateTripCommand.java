@@ -7,7 +7,6 @@ import com.example.crudapp.entites.trip.TripScheduling;
 import com.example.crudapp.entites.trip.TripStatus;
 import com.example.crudapp.entites.user.User;
 
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -36,7 +35,7 @@ public class CreateTripCommand implements Command {
         System.out.print("Введите id водителя, если он уже есть (или Enter для пропуска): ");
         String idDriver = scanner.nextLine();
 
-        if(!idDriver.isEmpty()) {
+        if (!idDriver.isEmpty()) {
             trip.setDriver(userService.getById(Long.valueOf(idDriver)));
         }
 

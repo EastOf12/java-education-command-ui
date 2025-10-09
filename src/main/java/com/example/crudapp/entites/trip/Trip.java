@@ -2,6 +2,7 @@ package com.example.crudapp.entites.trip;
 
 import com.example.crudapp.api.Entity;
 import com.example.crudapp.entites.user.User;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -44,63 +45,63 @@ public class Trip extends Entity {
         return creator;
     }
 
-    public User getDriver() {
-        return driver;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public int getSeats() {
-        return seats;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public TripStatus getTripStatus() {
-        return tripStatus;
-    }
-
-    public TripScheduling getTripScheduling() {
-        return tripScheduling;
-    }
-
-
-    //Сеттеры
-
     public void setCreator(User creator) {
         this.creator = creator;
+    }
+
+    public User getDriver() {
+        return driver;
     }
 
     public void setDriver(User driver) {
         this.driver = driver;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
+
+    //Сеттеры
+
+    public int getSeats() {
+        return seats;
+    }
+
     public void setSeats(int seats) {
         this.seats = seats;
+    }
+
+    public int getCost() {
+        return cost;
     }
 
     public void setCost(int cost) {
         this.cost = cost;
     }
 
+    public TripStatus getTripStatus() {
+        return tripStatus;
+    }
+
     public void setTripStatus(TripStatus tripStatus) {
         this.tripStatus = tripStatus;
+    }
+
+    public TripScheduling getTripScheduling() {
+        return tripScheduling;
     }
 
     public void setTripScheduling(TripScheduling tripScheduling) {

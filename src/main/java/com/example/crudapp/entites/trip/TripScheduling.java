@@ -1,7 +1,5 @@
 package com.example.crudapp.entites.trip;
 
-import com.example.crudapp.api.Entity;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -26,14 +24,13 @@ public class TripScheduling {
         return planedDepartureDateTime;
     }
 
-    public LocalDateTime getPlanedArrivalDateTime() {
-        return planedArrivalDateTime;
-    }
-
-
     //Сеттеры
     public void setPlanedDepartureDateTime(LocalDateTime planedDepartureDateTime) {
         this.planedDepartureDateTime = planedDepartureDateTime;
+    }
+
+    public LocalDateTime getPlanedArrivalDateTime() {
+        return planedArrivalDateTime;
     }
 
     public void setPlanedArrivalDateTime(LocalDateTime planedArrivalDateTime) {

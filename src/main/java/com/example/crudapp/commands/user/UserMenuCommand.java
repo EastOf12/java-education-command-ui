@@ -4,7 +4,6 @@ import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
 import com.example.crudapp.entites.user.User;
 
-
 import java.util.Scanner;
 
 

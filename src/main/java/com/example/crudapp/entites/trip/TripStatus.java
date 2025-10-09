@@ -2,7 +2,7 @@ package com.example.crudapp.entites.trip;
 
 import java.util.Objects;
 
-public class TripStatus{
+public class TripStatus {
     private String status;
 
     public TripStatus() {

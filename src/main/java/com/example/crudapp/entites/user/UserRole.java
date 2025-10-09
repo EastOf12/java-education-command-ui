@@ -2,7 +2,7 @@ package com.example.crudapp.entites.user;
 
 import java.util.Objects;
 
-public class UserRole{
+public class UserRole {
     private String role;
 
     public UserRole() {

@@ -2,17 +2,29 @@ package com.example.crudapp.commands;
 
 
 import com.example.crudapp.api.Service;
+import com.example.crudapp.commands.passenger.PassengerMenuCommand;
+import com.example.crudapp.commands.trip.TripMenuCommand;
 import com.example.crudapp.commands.user.UserMenuCommand;
+import com.example.crudapp.entites.passanger.Passenger;
+import com.example.crudapp.entites.trip.Trip;
 import com.example.crudapp.entites.user.User;
 
 import java.util.Scanner;
 
 public class MainMenuCommand implements Command {
     private final Service<User> userService;
+    private final Service<Trip> tripService;
+    private final Service<Passenger> passengerService;
     private final Scanner scanner;
     private boolean running = true;
 
-    public MainMenuCommand(Service<User> userService, Scanner scanner) {
+    public MainMenuCommand(
+            Service<User> userService,
+            Service<Trip> tripService,
+            Service<Passenger> passengerService,
+            Scanner scanner) {
+        this.tripService = tripService;
+        this.passengerService = passengerService;
         this.userService = userService;
         this.scanner = scanner;
     }
@@ -30,6 +42,8 @@ public class MainMenuCommand implements Command {
     private void showMenu() {
         System.out.println("\n=== Главное меню ===");
         System.out.println("1. Работа с пользователями");
+        System.out.println("2. Работа с поездками");
+        System.out.println("3. Работа с пассажирами");
         System.out.println("0. Выход");
         System.out.print("Выберите пункт: ");
     }
@@ -46,6 +60,12 @@ public class MainMenuCommand implements Command {
         switch (choice) {
             case 1:
                 new UserMenuCommand(userService, scanner).execute();
+                break;
+            case 2:
+                new TripMenuCommand(tripService, userService, scanner).execute();
+                break;
+            case 3:
+                new PassengerMenuCommand(passengerService, userService, tripService, scanner).execute();
                 break;
             case 0:
                 running = false;

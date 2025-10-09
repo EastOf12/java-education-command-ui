@@ -49,82 +49,81 @@ public class User extends Entity {
         return firstName;
     }
 
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public LocalDate getBirthday() {
-        return birthday;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    public UserContacts getUserContacts() {
-        return userContacts;
-    }
-
-    public UserAuth getUserAuth() {
-        return userAuth;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-
     //Сеттеры
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
     }
 
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Gender getGender() {
+        return gender;
     }
 
     public void setGender(Gender gender) {
         this.gender = gender;
     }
 
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
     }
 
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
+    public UserRole getRole() {
+        return role;
+    }
+
     public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    public UserContacts getUserContacts() {
+        return userContacts;
     }
 
     public void setUserContacts(UserContacts userContacts) {
         this.userContacts = userContacts;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public UserAuth getUserAuth() {
+        return userAuth;
     }
 
     public void setUserAuth(UserAuth userAuth) {
         this.userAuth = userAuth;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
     }
 
     @Override
@@ -134,14 +133,14 @@ public class User extends Entity {
 
         User user = (User) o;
         return Objects.equals(firstName, user.firstName) &&
-                        Objects.equals(middleName, user.middleName) &&
-                        Objects.equals(lastName, user.lastName) && gender == user.gender &&
-                        Objects.equals(birthday, user.birthday) &&
-                        Objects.equals(createdDate, user.createdDate) &&
-                        Objects.equals(role, user.role) &&
-                        Objects.equals(userContacts, user.userContacts) &&
-                        Objects.equals(userAuth, user.userAuth) &&
-                        Objects.equals(car, user.car);
+                Objects.equals(middleName, user.middleName) &&
+                Objects.equals(lastName, user.lastName) && gender == user.gender &&
+                Objects.equals(birthday, user.birthday) &&
+                Objects.equals(createdDate, user.createdDate) &&
+                Objects.equals(role, user.role) &&
+                Objects.equals(userContacts, user.userContacts) &&
+                Objects.equals(userAuth, user.userAuth) &&
+                Objects.equals(car, user.car);
     }
 
     @Override

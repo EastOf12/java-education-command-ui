@@ -23,16 +23,12 @@ public class Car {
         return maxSeat;
     }
 
+    public void setMaxSeat(int maxSeat) {
+        this.maxSeat = maxSeat;
+    }
+
     public String getNumber() {
         return number;
-    }
-
-    public CarColor getColor() {
-        return color;
-    }
-
-    public CarBrand getBrand() {
-        return brand;
     }
 
     //Сеттеры
@@ -40,12 +36,16 @@ public class Car {
         this.number = number;
     }
 
-    public void setMaxSeat(int maxSeat) {
-        this.maxSeat = maxSeat;
+    public CarColor getColor() {
+        return color;
     }
 
     public void setColor(CarColor color) {
         this.color = color;
+    }
+
+    public CarBrand getBrand() {
+        return brand;
     }
 
     public void setBrand(CarBrand brand) {

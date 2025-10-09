@@ -4,19 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402fc0f-d406-48d3-bbe3-89ff50607758" name="Changes" comment="Добавил CRUD и базовые Entity">
+    <list default="true" id="7402fc0f-d406-48d3-bbe3-89ff50607758" name="Changes" comment="Первый коммит">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/api/DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/api/DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/api/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/api/Service.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/MainMenuCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/MainMenuCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/passenger/DeletePassengerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/passenger/DeletePassengerCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/passenger/UpdatePassengerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/passenger/UpdatePassengerCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/trip/CreateTripCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/trip/CreateTripCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/trip/UpdateTripCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/trip/UpdateTripCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/CreateUserCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/CreateUserCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/DeleteUserCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/DeleteUserCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/ListUsersCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/ListUsersCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/ReadUserCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/ReadUserCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/UpdateUserCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/UpdateUserCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/UserMenuCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/commands/user/UserMenuCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/car/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/car/Car.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/car/CarBrand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/car/CarBrand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/car/CarColor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/car/CarColor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/passanger/Passenger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/passanger/Passenger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/trip/Trip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/trip/Trip.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/trip/TripLegs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/trip/TripLegs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/trip/TripScheduling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/trip/TripScheduling.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/trip/TripStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/trip/TripStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/user/UserAuth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/user/UserAuth.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/user/UserContacts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/user/UserContacts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/user/UserRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/entites/user/UserRole.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/factories/ServiceFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/factories/ServiceFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/repositories/inmemory/InMemoryUserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/repositories/inmemory/InMemoryUserDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudapp/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudapp/services/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,15 +75,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Application.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "addCRUD",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Борис/Desktop/java-education-command-ui2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Application.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;addCRUD&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Борис/Desktop/java-education-command-ui2&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Борис\Desktop\java-education-command-ui\src\main\java\com\example\crudapp\commands\passenger" />
