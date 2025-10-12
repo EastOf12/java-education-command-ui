@@ -24,13 +24,13 @@ public class PassengerService implements Service<Passenger> {
     }
 
     @Override
-    public void save(Passenger user) {
-        passengerDAO.save(user);
+    public void save(Passenger passenger) {
+        passengerDAO.save(passenger);
     }
 
     @Override
-    public void update(Passenger user) {
-        passengerDAO.update(user);
+    public void update(Passenger passenger) {
+        passengerDAO.update(passenger);
     }
 
     @Override

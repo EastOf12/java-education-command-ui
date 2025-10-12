@@ -2,7 +2,6 @@ package com.example.crudapp.entites.user;
 
 
 import com.example.crudapp.api.Entity;
-import com.example.crudapp.entites.car.Car;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,7 +17,6 @@ public class User extends Entity {
     private UserRole role;
     private UserContacts userContacts;
     private UserAuth userAuth;
-    private Car car;
 
     public User() {
     }
@@ -118,14 +116,6 @@ public class User extends Entity {
         this.userAuth = userAuth;
     }
 
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -139,8 +129,7 @@ public class User extends Entity {
                 Objects.equals(createdDate, user.createdDate) &&
                 Objects.equals(role, user.role) &&
                 Objects.equals(userContacts, user.userContacts) &&
-                Objects.equals(userAuth, user.userAuth) &&
-                Objects.equals(car, user.car);
+                Objects.equals(userAuth, user.userAuth);
     }
 
     @Override
@@ -154,7 +143,6 @@ public class User extends Entity {
         result = 31 * result + Objects.hashCode(role);
         result = 31 * result + Objects.hashCode(userContacts);
         result = 31 * result + Objects.hashCode(userAuth);
-        result = 31 * result + Objects.hashCode(car);
         return result;
     }
 
@@ -170,7 +158,6 @@ public class User extends Entity {
                 ", role=" + role +
                 ", userContacts=" + userContacts +
                 ", userAuth=" + userAuth +
-                ", car=" + car +
                 ", id=" + id +
                 '}';
     }

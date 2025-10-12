@@ -1,24 +1,36 @@
 package com.example.crudapp.entites.car;
 
+import com.example.crudapp.api.Entity;
+
 import java.util.Objects;
 
-public class Car {
+public class Car extends Entity {
     private String number;
     private int maxSeat;
     private CarColor color;
     private CarBrand brand;
+    private Long userid;
 
     public Car() {
     }
 
-    public Car(String number, int maxSeat, CarColor color, CarBrand brand) {
+    public Car(String number, int maxSeat, CarColor color, CarBrand brand, Long userId) {
         this.number = number;
         this.maxSeat = maxSeat;
         this.color = color;
         this.brand = brand;
+        this.userid = userId;
     }
 
     //Геттеры
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
     public int getMaxSeat() {
         return maxSeat;
     }
@@ -27,19 +39,11 @@ public class Car {
         this.maxSeat = maxSeat;
     }
 
-    public String getNumber() {
-        return number;
-    }
-
-    //Сеттеры
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
     public CarColor getColor() {
         return color;
     }
 
+    //Сеттеры
     public void setColor(CarColor color) {
         this.color = color;
     }
@@ -52,13 +56,21 @@ public class Car {
         this.brand = brand;
     }
 
+    public Long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Car car = (Car) o;
-        return maxSeat == car.maxSeat && Objects.equals(number, car.number) && Objects.equals(color, car.color) && Objects.equals(brand, car.brand);
+        return maxSeat == car.maxSeat && Objects.equals(number, car.number) && Objects.equals(color, car.color) && Objects.equals(brand, car.brand) && Objects.equals(userid, car.userid);
     }
 
     @Override
@@ -67,6 +79,7 @@ public class Car {
         result = 31 * result + maxSeat;
         result = 31 * result + Objects.hashCode(color);
         result = 31 * result + Objects.hashCode(brand);
+        result = 31 * result + Objects.hashCode(userid);
         return result;
     }
 
@@ -77,6 +90,8 @@ public class Car {
                 ", maxSeat=" + maxSeat +
                 ", color=" + color +
                 ", brand=" + brand +
+                ", userid=" + userid +
+                ", id=" + id +
                 '}';
     }
 }

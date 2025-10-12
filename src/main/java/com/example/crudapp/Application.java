@@ -3,6 +3,7 @@ package com.example.crudapp;
 
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.MainMenuCommand;
+import com.example.crudapp.entites.car.Car;
 import com.example.crudapp.entites.passanger.Passenger;
 import com.example.crudapp.entites.trip.Trip;
 import com.example.crudapp.entites.user.User;
@@ -27,7 +28,8 @@ public class Application {
         Service<User> userService = ServiceFactory.createUserService();
         Service<Trip> tripService = ServiceFactory.createTripService();
         Service<Passenger> passengerService = ServiceFactory.createPassengerService();
-        MainMenuCommand mainMenu = new MainMenuCommand(userService, tripService, passengerService, scanner);
+        Service<Car> carService = ServiceFactory.createCarService();
+        MainMenuCommand mainMenu = new MainMenuCommand(userService, tripService, passengerService, carService, scanner);
         mainMenu.execute();
 
         scanner.close();
