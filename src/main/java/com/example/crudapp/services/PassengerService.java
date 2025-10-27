@@ -29,8 +29,8 @@ public class PassengerService implements Service<Passenger> {
     }
 
     @Override
-    public void update(Passenger passenger) {
-        passengerDAO.update(passenger);
+    public boolean update(Passenger passenger) {
+        return passengerDAO.update(passenger);
     }
 
     @Override

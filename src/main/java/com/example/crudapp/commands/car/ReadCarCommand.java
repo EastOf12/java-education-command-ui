@@ -8,16 +8,25 @@ import java.util.Scanner;
 
 public class ReadCarCommand implements Command {
 
+    private static ReadCarCommand instance;
     private final Service<Car> carService;
     private final Scanner scanner;
 
-    public ReadCarCommand(Service<Car> carService, Scanner scanner) {
+    private ReadCarCommand(Service<Car> carService, Scanner scanner) {
         this.carService = carService;
         this.scanner = scanner;
     }
 
+    public static synchronized ReadCarCommand getInstance(
+            Service<Car> carService, Scanner scanner) {
+        if (instance == null) {
+            instance = new ReadCarCommand(carService, scanner);
+        }
+        return instance;
+    }
+
     @Override
-    public void execute() {
+    public Command execute() {
         System.out.println("=== Просмотр автомобиля ===");
         System.out.print("Введите ID автомобиля: ");
         try {
@@ -31,5 +40,7 @@ public class ReadCarCommand implements Command {
         } catch (NumberFormatException e) {
             System.out.println("Неверный формат ID");
         }
+
+        return CarMenuCommand.getInstance().execute();
     }
 }

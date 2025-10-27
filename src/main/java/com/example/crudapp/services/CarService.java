@@ -29,8 +29,8 @@ public class CarService implements Service<Car> {
     }
 
     @Override
-    public void update(Car car) {
-        carDAO.update(car);
+    public boolean update(Car car) {
+        return carDAO.update(car);
     }
 
     @Override

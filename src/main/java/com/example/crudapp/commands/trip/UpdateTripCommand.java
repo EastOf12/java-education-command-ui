@@ -11,18 +11,30 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class UpdateTripCommand implements Command {
+    private static UpdateTripCommand instance;
     private final Service<Trip> tripService;
     private final Service<User> userService;
     private final Scanner scanner;
 
-    public UpdateTripCommand(Service<Trip> tripService, Service<User> userService, Scanner scanner) {
+    private UpdateTripCommand(Service<Trip> tripService, Service<User> userService, Scanner scanner) {
         this.tripService = tripService;
         this.userService = userService;
         this.scanner = scanner;
     }
 
+    public static synchronized UpdateTripCommand getInstance(
+            Service<Trip> tripService,
+            Service<User> userService,
+            Scanner scanner) {
+        if (instance == null) {
+            instance = new UpdateTripCommand(tripService, userService, scanner);
+        }
+
+        return instance;
+    }
+
     @Override
-    public void execute() {
+    public Command execute() {
         System.out.println("=== Обновление поездки ===");
         System.out.print("Введите ID поездки: ");
 
@@ -75,13 +87,18 @@ public class UpdateTripCommand implements Command {
                     trip.getTripScheduling().setPlanedArrivalDateTime(LocalDateTime.parse(arrival, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
                 }
 
-                tripService.update(trip);
-                System.out.println("Поездка обновлена");
+                if(tripService.update(trip)) {
+                    System.out.println("Поездка обновлена");
+                } else {
+                    System.out.println("Поездка не обновлена");
+                }
             } else {
                 System.out.println("Поездка не найдена");
             }
         } catch (NumberFormatException e) {
             System.out.println("Неверный формат ID");
         }
+
+        return TripMenuCommand.getInstance().execute();
     }
 }

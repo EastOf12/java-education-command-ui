@@ -6,14 +6,22 @@ import com.example.crudapp.entites.trip.Trip;
 
 public class ListTripCommand implements Command {
 
+    private static ListTripCommand instance;
     private final Service<Trip> tripService;
 
-    public ListTripCommand(Service<Trip> tripService) {
+    private ListTripCommand(Service<Trip> tripService) {
         this.tripService = tripService;
     }
 
+    public static synchronized ListTripCommand getInstance(Service<Trip> tripService) {
+        if (instance == null) {
+            instance = new ListTripCommand(tripService);
+        }
+        return instance;
+    }
+
     @Override
-    public void execute() {
+    public Command execute() {
         System.out.println("=== Список поездок ===");
         java.util.List<Trip> trips = tripService.getAll();
         if (trips.isEmpty()) {
@@ -21,5 +29,7 @@ public class ListTripCommand implements Command {
         } else {
             trips.forEach(System.out::println);
         }
+
+        return TripMenuCommand.getInstance().execute();
     }
 }

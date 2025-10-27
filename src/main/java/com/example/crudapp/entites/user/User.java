@@ -42,12 +42,10 @@ public class User extends Entity {
         this.userAuth = userAuth;
     }
 
-    //Геттеры
     public String getFirstName() {
         return firstName;
     }
 
-    //Сеттеры
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }

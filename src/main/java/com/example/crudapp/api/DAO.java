@@ -1,7 +1,5 @@
 package com.example.crudapp.api;
 
-import com.example.crudapp.entites.car.Car;
-
 import java.util.List;
 
 public interface DAO<T extends Entity> {
@@ -11,7 +9,7 @@ public interface DAO<T extends Entity> {
 
     List<T> findAll();
 
-    void update(T entity);
+    boolean update(T entity);
 
     void delete(Long id);
 }

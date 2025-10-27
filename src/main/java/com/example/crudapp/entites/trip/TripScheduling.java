@@ -19,12 +19,10 @@ public class TripScheduling {
         this.planedArrivalDateTime = planedArrivalDateTime;
     }
 
-    //Геттеры
     public LocalDateTime getPlanedDepartureDateTime() {
         return planedDepartureDateTime;
     }
 
-    //Сеттеры
     public void setPlanedDepartureDateTime(LocalDateTime planedDepartureDateTime) {
         this.planedDepartureDateTime = planedDepartureDateTime;
     }

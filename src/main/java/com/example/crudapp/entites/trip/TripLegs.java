@@ -24,12 +24,10 @@ public class TripLegs {
         this.departure = departure;
     }
 
-    //Геттеры
     public String getDeparture() {
         return departure;
     }
 
-    //Сеттеры
     public void setDeparture(String departure) {
         this.departure = departure;
     }

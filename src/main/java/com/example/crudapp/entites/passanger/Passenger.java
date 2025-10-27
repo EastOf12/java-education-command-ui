@@ -28,12 +28,10 @@ public class Passenger extends Entity {
         this.message = message;
     }
 
-    //Геттеры
     public User getUser() {
         return user;
     }
 
-    //Сеттеры
     public void setUser(User user) {
         this.user = user;
     }

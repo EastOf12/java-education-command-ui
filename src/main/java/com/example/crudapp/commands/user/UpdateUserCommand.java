@@ -12,16 +12,24 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class UpdateUserCommand implements Command {
+    private static UpdateUserCommand instance;
     private final Service<User> userService;
     private final Scanner scanner;
 
-    public UpdateUserCommand(Service<User> userService, Scanner scanner) {
+    private UpdateUserCommand(Service<User> userService, Scanner scanner) {
         this.userService = userService;
         this.scanner = scanner;
     }
 
+    public static synchronized UpdateUserCommand getInstance(Service<User> userService, Scanner scanner) {
+        if (instance == null) {
+            instance = new UpdateUserCommand(userService, scanner);
+        }
+        return instance;
+    }
+
     @Override
-    public void execute() {
+    public Command execute() {
         System.out.println("=== Обновление пользователя ===");
         System.out.print("Введите ID пользователя: ");
         try {
@@ -84,13 +92,19 @@ public class UpdateUserCommand implements Command {
                     user.getUserAuth().setLastPasswordReset(LocalDateTime.now());
                 }
 
-                userService.update(user);
-                System.out.println("Пользователь обновлен");
+                if(userService.update(user)) {
+                    System.out.println("Пользователь обновлен");
+                } else {
+                    System.out.println("Пользователь не обновлен");
+                }
+
             } else {
                 System.out.println("Пользователь не найден");
             }
         } catch (NumberFormatException e) {
             System.out.println("Неверный формат ID");
         }
+
+        return UserMenuCommand.getInstance().execute();
     }
 }

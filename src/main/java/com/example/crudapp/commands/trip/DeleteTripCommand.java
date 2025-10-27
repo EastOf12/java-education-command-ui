@@ -2,21 +2,33 @@ package com.example.crudapp.commands.trip;
 
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
+import com.example.crudapp.commands.Confirm;
 import com.example.crudapp.entites.trip.Trip;
 
 import java.util.Scanner;
 
 public class DeleteTripCommand implements Command {
+    private static DeleteTripCommand instance;
     private final Service<Trip> tripService;
     private final Scanner scanner;
 
-    public DeleteTripCommand(Service<Trip> tripService, Scanner scanner) {
+    private DeleteTripCommand(
+            Service<Trip> tripService,
+            Scanner scanner) {
         this.tripService = tripService;
         this.scanner = scanner;
     }
 
+    public static synchronized DeleteTripCommand getInstance(Service<Trip> tripService, Scanner scanner) {
+        if (instance == null) {
+            instance = new DeleteTripCommand(tripService, scanner);
+        }
+
+        return instance;
+    }
+
     @Override
-    public void execute() {
+    public Command execute() {
         System.out.println("=== Удаление поездки ===");
         System.out.print("Введите ID поездки: ");
         try {
@@ -26,7 +38,7 @@ public class DeleteTripCommand implements Command {
                 System.out.println("Удаление поездки: " + trip);
                 System.out.print("Подтвердите удаление (y/n): ");
                 String confirm = scanner.nextLine();
-                if ("y".equalsIgnoreCase(confirm)) {
+                if (Confirm.valueOf(confirm).equals(Confirm.y)) {
                     tripService.delete(id);
                     System.out.println("Поездка удалена");
                 } else {
@@ -38,5 +50,7 @@ public class DeleteTripCommand implements Command {
         } catch (NumberFormatException e) {
             System.out.println("Неверный формат ID");
         }
+
+        return TripMenuCommand.getInstance().execute();
     }
 }

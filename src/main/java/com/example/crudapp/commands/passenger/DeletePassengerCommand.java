@@ -2,21 +2,32 @@ package com.example.crudapp.commands.passenger;
 
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
+import com.example.crudapp.commands.Confirm;
 import com.example.crudapp.entites.passanger.Passenger;
 
 import java.util.Scanner;
 
 public class DeletePassengerCommand implements Command {
+    private static DeletePassengerCommand instance;
     private final Service<Passenger> passengerService;
     private final Scanner scanner;
 
-    public DeletePassengerCommand(Service<Passenger> passengerService, Scanner scanner) {
+    private DeletePassengerCommand(Service<Passenger> passengerService, Scanner scanner) {
         this.passengerService = passengerService;
         this.scanner = scanner;
     }
 
+    public static synchronized DeletePassengerCommand getInstance(
+            Service<Passenger> passengerService, Scanner scanner) {
+        if (instance == null) {
+            instance = new DeletePassengerCommand(passengerService, scanner);
+        }
+
+        return instance;
+    }
+
     @Override
-    public void execute() {
+    public Command execute() {
         System.out.println("=== Удаление пассажира ===");
         System.out.print("Введите ID пассажира: ");
         try {
@@ -26,7 +37,7 @@ public class DeletePassengerCommand implements Command {
                 System.out.println("Удаление пассажира: " + passenger);
                 System.out.print("Подтвердите удаление (y/n): ");
                 String confirm = scanner.nextLine();
-                if ("y".equalsIgnoreCase(confirm)) {
+                if (Confirm.valueOf(confirm).equals(Confirm.y)) {
                     passengerService.delete(id);
                     System.out.println("Пассажир удален");
                 } else {
@@ -38,5 +49,7 @@ public class DeletePassengerCommand implements Command {
         } catch (NumberFormatException e) {
             System.out.println("Неверный формат ID");
         }
+
+        return PassengerMenuCommand.getInstance().execute();
     }
 }

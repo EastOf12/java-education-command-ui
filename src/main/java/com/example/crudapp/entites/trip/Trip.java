@@ -40,7 +40,6 @@ public class Trip extends Entity {
         this.tripScheduling = tripScheduling;
     }
 
-    //Геттеры
     public User getCreator() {
         return creator;
     }
@@ -72,9 +71,6 @@ public class Trip extends Entity {
     public void setDescription(String description) {
         this.description = description;
     }
-
-
-    //Сеттеры
 
     public int getSeats() {
         return seats;

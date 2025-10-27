@@ -32,10 +32,13 @@ public class InMemoryPassengerDAO implements DAO<Passenger> {
     }
 
     @Override
-    public void update(Passenger passenger) {
+    public boolean update(Passenger passenger) {
         if (passenger.getId() != null && passengers.containsKey(passenger.getId())) {
             passengers.put(passenger.getId(), passenger);
+            return true;
         }
+
+        return false;
     }
 
     @Override

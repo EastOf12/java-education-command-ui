@@ -12,13 +12,10 @@ public class TripStatus {
         this.status = status;
     }
 
-    //Геттеры
     public String getStatus() {
         return status;
     }
 
-
-    //Сеттеры
     public void setStatus(String status) {
         this.status = status;
     }

@@ -1,47 +1,42 @@
 package com.example.crudapp.commands;
 
-
-import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.car.CarMenuCommand;
 import com.example.crudapp.commands.passenger.PassengerMenuCommand;
 import com.example.crudapp.commands.trip.TripMenuCommand;
 import com.example.crudapp.commands.user.UserMenuCommand;
-import com.example.crudapp.entites.car.Car;
-import com.example.crudapp.entites.passanger.Passenger;
-import com.example.crudapp.entites.trip.Trip;
-import com.example.crudapp.entites.user.User;
+import com.example.crudapp.services.ServiceInjector;
 
 import java.util.Scanner;
 
 public class MainMenuCommand implements Command {
-    private final Service<User> userService;
-    private final Service<Trip> tripService;
-    private final Service<Passenger> passengerService;
-    private final Service<Car> carService;
+    private static MainMenuCommand instance;
     private final Scanner scanner;
-    private boolean running = true;
+    private final ServiceInjector serviceInjector;
 
-    public MainMenuCommand(
-            Service<User> userService,
-            Service<Trip> tripService,
-            Service<Passenger> passengerService,
-            Service<Car> carService,
-            Scanner scanner) {
-        this.tripService = tripService;
-        this.passengerService = passengerService;
-        this.userService = userService;
-        this.carService = carService;
+    private MainMenuCommand(ServiceInjector serviceInjector, Scanner scanner) {
+        this.serviceInjector = serviceInjector;
         this.scanner = scanner;
     }
 
-    @Override
-    public void execute() {
-        running = true;
-        while (running) {
-            showMenu();
-            int choice = getMenuChoice();
-            handleChoice(choice);
+    public static synchronized MainMenuCommand getInstance(ServiceInjector serviceInjector, Scanner scanner) {
+        if (instance == null) {
+            instance = new MainMenuCommand(serviceInjector, scanner);
         }
+        return instance;
+    }
+
+    public static synchronized MainMenuCommand getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("MainMenuCommand не был инициализирован");
+        }
+
+        return instance;
+    }
+
+    @Override
+    public Command execute() {
+        showMenu();
+        return handleChoice(getMenuChoice());
     }
 
     private void showMenu() {
@@ -62,26 +57,17 @@ public class MainMenuCommand implements Command {
         }
     }
 
-    private void handleChoice(int choice) {
-        switch (choice) {
-            case 1:
-                new UserMenuCommand(userService, scanner).execute();
-                break;
-            case 2:
-                new TripMenuCommand(tripService, userService, scanner).execute();
-                break;
-            case 3:
-                new PassengerMenuCommand(passengerService, userService, tripService, scanner).execute();
-                break;
-            case 4:
-                new CarMenuCommand(userService, carService, scanner).execute();
-                break;
-            case 0:
-                running = false;
-                System.out.println("До свидания!");
-                break;
-            default:
+    private Command handleChoice(int choice) {
+        return switch (choice) {
+            case 1 -> UserMenuCommand.getInstance(serviceInjector, scanner).execute();
+            case 2 -> TripMenuCommand.getInstance(serviceInjector, scanner).execute();
+            case 3 -> PassengerMenuCommand.getInstance(serviceInjector, scanner).execute();
+            case 4 -> CarMenuCommand.getInstance(serviceInjector, scanner).execute();
+            case 0 -> ExitCommand.getInstance(scanner).execute();
+            default -> {
                 System.out.println("Неверный выбор. Попробуйте снова.");
-        }
+                yield this.execute();
+            }
+        };
     }
 }

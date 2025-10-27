@@ -12,12 +12,10 @@ public class UserRole {
         this.role = role;
     }
 
-    //Геттеры
     public String getRole() {
         return role;
     }
 
-    //Сеттеры
     public void setRole(String role) {
         this.role = role;
     }

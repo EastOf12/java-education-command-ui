@@ -6,15 +6,22 @@ import com.example.crudapp.entites.passanger.Passenger;
 
 
 public class ListPassengerCommand implements Command {
-
+    private static ListPassengerCommand instance;
     private final Service<Passenger> passengerService;
 
-    public ListPassengerCommand(Service<Passenger> passengerService) {
+    private ListPassengerCommand(Service<Passenger> passengerService) {
         this.passengerService = passengerService;
     }
 
+    public static synchronized ListPassengerCommand getInstance(Service<Passenger> passengerService) {
+        if (instance == null) {
+            instance = new ListPassengerCommand(passengerService);
+        }
+        return instance;
+    }
+
     @Override
-    public void execute() {
+    public Command execute() {
         System.out.println("=== Список пассажиров ===");
         java.util.List<Passenger> passengers = passengerService.getAll();
         if (passengers.isEmpty()) {
@@ -22,5 +29,7 @@ public class ListPassengerCommand implements Command {
         } else {
             passengers.forEach(System.out::println);
         }
+
+        return PassengerMenuCommand.getInstance().execute();
     }
 }

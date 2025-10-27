@@ -9,7 +9,7 @@ public interface Service<T extends Entity> {
 
     void save(T entity);
 
-    void update(T entity);
+    boolean update(T entity);
 
     void delete(Long id);
 }

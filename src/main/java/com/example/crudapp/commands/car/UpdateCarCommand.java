@@ -9,16 +9,26 @@ import com.example.crudapp.entites.car.CarColor;
 import java.util.Scanner;
 
 public class UpdateCarCommand implements Command {
+    private static UpdateCarCommand instance;
     private final Service<Car> carService;
     private final Scanner scanner;
 
-    public UpdateCarCommand(Service<Car> carService, Scanner scanner) {
+    private UpdateCarCommand(Service<Car> carService, Scanner scanner) {
         this.carService = carService;
         this.scanner = scanner;
     }
 
+    public static synchronized UpdateCarCommand getInstance(Service<Car> carService, Scanner scanner) {
+        if (instance == null) {
+            instance = new UpdateCarCommand(carService, scanner);
+        }
+
+        return instance;
+    }
+
     @Override
-    public void execute() {
+    public Command execute() {
+
         System.out.println("=== Обновление автомобиля ===");
         System.out.print("Введите ID автомобиля: ");
 
@@ -56,13 +66,18 @@ public class UpdateCarCommand implements Command {
                     car.setBrand(new CarBrand(brand));
                 }
 
-                carService.update(car);
-                System.out.println("Автомобиль обновлен");
+                if (carService.update(car)) {
+                    System.out.println("Автомобиль обновлен");
+                } else {
+                    System.out.println("Автомобиль не обновлен");
+                }
             } else {
                 System.out.println("Автомобиль не найден");
             }
         } catch (NumberFormatException e) {
             System.out.println("Неверный формат ID");
         }
+
+        return CarMenuCommand.getInstance().execute();
     }
 }

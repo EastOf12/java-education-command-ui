@@ -32,10 +32,13 @@ public class InMemoryTripDAO implements DAO<Trip> {
     }
 
     @Override
-    public void update(Trip trip) {
+    public boolean update(Trip trip) {
         if (trip.getId() != null && trips.containsKey(trip.getId())) {
             trips.put(trip.getId(), trip);
+            return true;
         }
+
+        return false;
     }
 
     @Override

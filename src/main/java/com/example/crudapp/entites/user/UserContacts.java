@@ -14,12 +14,10 @@ public class UserContacts {
         this.phoneNumber = phoneNumber;
     }
 
-    //Геттеры
     public String getEmail() {
         return email;
     }
 
-    //Сеттеры
     public void setEmail(String email) {
         this.email = email;
     }

@@ -6,14 +6,23 @@ import com.example.crudapp.entites.car.Car;
 
 public class ListCarCommand implements Command {
 
+    private static ListCarCommand instance;
     private final Service<Car> carService;
 
-    public ListCarCommand(Service<Car> carService) {
+    private ListCarCommand(Service<Car> carService) {
         this.carService = carService;
     }
 
+    public static synchronized ListCarCommand getInstance(Service<Car> carService) {
+        if (instance == null) {
+            instance = new ListCarCommand(carService);
+        }
+
+        return instance;
+    }
+
     @Override
-    public void execute() {
+    public Command execute() {
         System.out.println("=== Список автомобилей ===");
         java.util.List<Car> cars = carService.getAll();
         if (cars.isEmpty()) {
@@ -21,5 +30,7 @@ public class ListCarCommand implements Command {
         } else {
             cars.forEach(System.out::println);
         }
+
+        return CarMenuCommand.getInstance().execute();
     }
 }

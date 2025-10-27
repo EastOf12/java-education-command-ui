@@ -2,20 +2,23 @@ package com.example.crudapp.commands.passenger;
 
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
+import com.example.crudapp.commands.ExitCommand;
 import com.example.crudapp.entites.passanger.Passenger;
 import com.example.crudapp.entites.trip.Trip;
 import com.example.crudapp.entites.user.User;
+import com.example.crudapp.services.ServiceInjector;
+import com.example.crudapp.services.ServiceKey;
 
 import java.util.Scanner;
 
 public class PassengerMenuCommand implements Command {
+    private static PassengerMenuCommand instance;
     private final Service<Passenger> passengerService;
     private final Service<User> userService;
     private final Service<Trip> tripService;
     private final Scanner scanner;
-    private boolean running = true;
 
-    public PassengerMenuCommand(
+    private PassengerMenuCommand(
             Service<Passenger> passengerService,
             Service<User> userService,
             Service<Trip> tripService,
@@ -26,19 +29,30 @@ public class PassengerMenuCommand implements Command {
         this.scanner = scanner;
     }
 
-    @Override
-    public void execute() {
-        running = true;
-        while (running) {
-            showMenu();
-            int choice = getMenuChoice();
-            handleChoice(choice);
-
-            if (running && choice != 0) {
-                System.out.println("\nНажмите Enter для продолжения...");
-                scanner.nextLine();
-            }
+    public static synchronized PassengerMenuCommand getInstance(ServiceInjector serviceInjector, Scanner scanner) {
+        if (instance == null) {
+            instance = new PassengerMenuCommand(
+                    serviceInjector.injectService(ServiceKey.PASSENGER_SERVICE),
+                    serviceInjector.injectService(ServiceKey.USER_SERVICE),
+                    serviceInjector.injectService(ServiceKey.TRIP_SERVICE),
+                    scanner
+            );
         }
+        return instance;
+    }
+
+    public static synchronized PassengerMenuCommand getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("PassengerMenuCommand не был инициализирован");
+        }
+        return instance;
+    }
+
+    @Override
+    public Command execute() {
+        showMenu();
+        int choice = getMenuChoice();
+        return handleChoice(choice);
     }
 
     private void showMenu() {
@@ -60,28 +74,18 @@ public class PassengerMenuCommand implements Command {
         }
     }
 
-    private void handleChoice(int choice) {
-        switch (choice) {
-            case 1:
-                new ListPassengerCommand(passengerService).execute();
-                break;
-            case 2:
-                new CreatePassengerCommand(passengerService, userService, tripService, scanner).execute();
-                break;
-            case 3:
-                new ReadPassengerCommand(passengerService, scanner).execute();
-                break;
-            case 4:
-                new UpdatePassengerCommand(passengerService, scanner).execute();
-                break;
-            case 5:
-                new DeletePassengerCommand(passengerService, scanner).execute();
-                break;
-            case 0:
-                running = false;
-                break;
-            default:
+    private Command handleChoice(int choice) {
+        return switch (choice) {
+            case 1 -> ListPassengerCommand.getInstance(passengerService).execute();
+            case 2 -> CreatePassengerCommand.getInstance(passengerService, userService, tripService, scanner).execute();
+            case 3 -> ReadPassengerCommand.getInstance(passengerService, scanner).execute();
+            case 4 -> UpdatePassengerCommand.getInstance(passengerService, scanner).execute();
+            case 5 -> DeletePassengerCommand.getInstance(passengerService, scanner).execute();
+            case 0 -> ExitCommand.getInstance(scanner).execute();
+            default -> {
                 System.out.println("Неверный выбор. Попробуйте снова.");
-        }
+                yield this.execute();
+            }
+        };
     }
 }

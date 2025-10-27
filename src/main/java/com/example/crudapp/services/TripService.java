@@ -29,8 +29,8 @@ public class TripService implements Service<Trip> {
     }
 
     @Override
-    public void update(Trip user) {
-        tripDAO.update(user);
+    public boolean update(Trip user) {
+        return tripDAO.update(user);
     }
 
     @Override

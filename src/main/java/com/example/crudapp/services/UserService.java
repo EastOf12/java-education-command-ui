@@ -30,8 +30,8 @@ public class UserService implements Service<User> {
     }
 
     @Override
-    public void update(User user) {
-        userDAO.update(user);
+    public boolean update(User user) {
+        return userDAO.update(user);
     }
 
     @Override

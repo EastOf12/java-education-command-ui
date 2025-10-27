@@ -7,16 +7,27 @@ import com.example.crudapp.entites.passanger.Passenger;
 import java.util.Scanner;
 
 public class UpdatePassengerCommand implements Command {
+    private static UpdatePassengerCommand instance;
     private final Service<Passenger> passengerService;
     private final Scanner scanner;
 
-    public UpdatePassengerCommand(Service<Passenger> passengerService, Scanner scanner) {
+    private UpdatePassengerCommand(Service<Passenger> passengerService, Scanner scanner) {
         this.passengerService = passengerService;
         this.scanner = scanner;
     }
 
+    public static synchronized UpdatePassengerCommand getInstance(
+            Service<Passenger> passengerService,
+            Scanner scanner) {
+        if (instance == null) {
+            instance = new UpdatePassengerCommand(passengerService, scanner);
+        }
+
+        return instance;
+    }
+
     @Override
-    public void execute() {
+    public Command execute() {
         System.out.println("=== Обновление пассажира ===");
         System.out.print("Введите ID пассажира: ");
 
@@ -40,13 +51,18 @@ public class UpdatePassengerCommand implements Command {
                     passenger.setSeats(Integer.parseInt(seats));
                 }
 
-                passengerService.update(passenger);
-                System.out.println("Пассажир обновлен");
+                if(passengerService.update(passenger)) {
+                    System.out.println("Пассажир обновлен");
+                } else {
+                    System.out.println("Пассажир не обновлен");
+                }
             } else {
                 System.out.println("Пассажир не найден обновлен");
             }
         } catch (NumberFormatException e) {
             System.out.println("Неверный формат ID");
         }
+
+        return PassengerMenuCommand.getInstance().execute();
     }
 }

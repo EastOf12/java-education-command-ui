@@ -2,18 +2,21 @@ package com.example.crudapp.commands.car;
 
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
+import com.example.crudapp.commands.MainMenuCommand;
 import com.example.crudapp.entites.car.Car;
 import com.example.crudapp.entites.user.User;
+import com.example.crudapp.services.ServiceInjector;
+import com.example.crudapp.services.ServiceKey;
 
 import java.util.Scanner;
 
 public class CarMenuCommand implements Command {
+    private static CarMenuCommand instance;
     private final Service<Car> carService;
     private final Service<User> userService;
     private final Scanner scanner;
-    private boolean running = true;
 
-    public CarMenuCommand(
+    private CarMenuCommand(
             Service<User> userService,
             Service<Car> carService,
             Scanner scanner) {
@@ -22,19 +25,29 @@ public class CarMenuCommand implements Command {
         this.scanner = scanner;
     }
 
-    @Override
-    public void execute() {
-        running = true;
-        while (running) {
-            showMenu();
-            int choice = getMenuChoice();
-            handleChoice(choice);
-
-            if (running && choice != 0) {
-                System.out.println("\nНажмите Enter для продолжения...");
-                scanner.nextLine();
-            }
+    public static synchronized CarMenuCommand getInstance(ServiceInjector serviceInjector, Scanner scanner) {
+        if (instance == null) {
+            instance = new CarMenuCommand(
+                    serviceInjector.injectService(ServiceKey.USER_SERVICE),
+                    serviceInjector.injectService(ServiceKey.CAR_SERVICE),
+                    scanner
+            );
         }
+        return instance;
+    }
+
+    public static synchronized CarMenuCommand getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("CarMenuCommand не был инициализирован");
+        }
+        return instance;
+    }
+
+    @Override
+    public Command execute() {
+        showMenu();
+        int choice = getMenuChoice();
+        return handleChoice(choice);
     }
 
     private void showMenu() {
@@ -56,28 +69,18 @@ public class CarMenuCommand implements Command {
         }
     }
 
-    private void handleChoice(int choice) {
-        switch (choice) {
-            case 1:
-                new CreateCarCommand(userService, carService, scanner).execute();
-                break;
-            case 2:
-                new UpdateCarCommand(carService, scanner).execute();
-                break;
-            case 3:
-                new ReadCarCommand(carService, scanner).execute();
-                break;
-            case 4:
-                new ListCarCommand(carService).execute();
-                break;
-            case 5:
-                new DeleteCarCommand(carService, scanner).execute();
-                break;
-            case 0:
-                running = false;
-                break;
-            default:
+    private Command handleChoice(int choice) {
+        return switch (choice) {
+            case 1 -> CreateCarCommand.getInstance(userService, carService, scanner).execute();
+            case 2 -> UpdateCarCommand.getInstance(carService, scanner).execute();
+            case 3 -> ReadCarCommand.getInstance(carService, scanner).execute();
+            case 4 -> ListCarCommand.getInstance(carService).execute();
+            case 5 -> DeleteCarCommand.getInstance(carService, scanner).execute();
+            case 0 -> MainMenuCommand.getInstance().execute();
+            default -> {
                 System.out.println("Неверный выбор. Попробуйте снова.");
-        }
+                yield this.execute();
+            }
+        };
     }
 }

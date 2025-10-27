@@ -19,7 +19,6 @@ public class UserAuth {
         this.lastPasswordReset = lastPasswordReset;
     }
 
-    //Геттеры
     public String getPassword() {
         return password;
     }
@@ -32,7 +31,6 @@ public class UserAuth {
         return lastPasswordReset;
     }
 
-    //Сеттеры
     public void setLastPasswordReset(LocalDateTime lastPasswordReset) {
         this.lastPasswordReset = lastPasswordReset;
     }

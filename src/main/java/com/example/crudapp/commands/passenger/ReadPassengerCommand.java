@@ -8,16 +8,26 @@ import java.util.Scanner;
 
 public class ReadPassengerCommand implements Command {
 
+    private static ReadPassengerCommand instance;
     private final Service<Passenger> passengerService;
     private final Scanner scanner;
 
-    public ReadPassengerCommand(Service<Passenger> passengerService, Scanner scanner) {
+    private ReadPassengerCommand(Service<Passenger> passengerService, Scanner scanner) {
         this.passengerService = passengerService;
         this.scanner = scanner;
     }
 
+    public static synchronized ReadPassengerCommand getInstance(
+            Service<Passenger> passengerService,
+            Scanner scanner) {
+        if (instance == null) {
+            instance = new ReadPassengerCommand(passengerService, scanner);
+        }
+        return instance;
+    }
+
     @Override
-    public void execute() {
+    public Command execute() {
         System.out.println("=== Просмотр пассажира ===");
         System.out.print("Введите ID пассажира: ");
         try {
@@ -31,5 +41,7 @@ public class ReadPassengerCommand implements Command {
         } catch (NumberFormatException e) {
             System.out.println("Неверный формат ID");
         }
+
+        return PassengerMenuCommand.getInstance().execute();
     }
 }

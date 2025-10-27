@@ -2,21 +2,31 @@ package com.example.crudapp.commands.car;
 
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
+import com.example.crudapp.commands.Confirm;
 import com.example.crudapp.entites.car.Car;
 
 import java.util.Scanner;
 
 public class DeleteCarCommand implements Command {
+    private static DeleteCarCommand instance;
     private final Service<Car> carService;
     private final Scanner scanner;
 
-    public DeleteCarCommand(Service<Car> carService, Scanner scanner) {
+    private DeleteCarCommand(Service<Car> carService, Scanner scanner) {
         this.carService = carService;
         this.scanner = scanner;
     }
 
+    public static synchronized DeleteCarCommand getInstance(Service<Car> carService, Scanner scanner) {
+        if (instance == null) {
+            instance = new DeleteCarCommand(carService, scanner);
+        }
+
+        return instance;
+    }
+
     @Override
-    public void execute() {
+    public Command execute() {
         System.out.println("=== Удаление автомобиля ===");
         System.out.print("Введите ID автомобиля: ");
         try {
@@ -26,7 +36,7 @@ public class DeleteCarCommand implements Command {
                 System.out.println("Удаление автомобиля: " + car);
                 System.out.print("Подтвердите удаление (y/n): ");
                 String confirm = scanner.nextLine();
-                if ("y".equalsIgnoreCase(confirm)) {
+                if (Confirm.valueOf(confirm).equals(Confirm.y)) {
                     carService.delete(id);
                     System.out.println("Автомобиль удален");
                 } else {
@@ -38,5 +48,7 @@ public class DeleteCarCommand implements Command {
         } catch (NumberFormatException e) {
             System.out.println("Неверный формат ID");
         }
+
+        return CarMenuCommand.getInstance().execute();
     }
 }

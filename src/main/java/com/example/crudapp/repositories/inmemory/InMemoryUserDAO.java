@@ -2,7 +2,6 @@ package com.example.crudapp.repositories.inmemory;
 
 
 import com.example.crudapp.api.DAO;
-import com.example.crudapp.entites.car.Car;
 import com.example.crudapp.entites.user.User;
 
 import java.util.ArrayList;
@@ -34,10 +33,13 @@ public class InMemoryUserDAO implements DAO<User> {
     }
 
     @Override
-    public void update(User user) {
+    public boolean update(User user) {
         if (user.getId() != null && users.containsKey(user.getId())) {
             users.put(user.getId(), user);
+            return true;
         }
+
+        return false;
     }
 
     @Override

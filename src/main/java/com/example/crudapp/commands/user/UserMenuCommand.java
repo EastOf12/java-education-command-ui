@@ -2,34 +2,45 @@ package com.example.crudapp.commands.user;
 
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
+import com.example.crudapp.commands.MainMenuCommand;
 import com.example.crudapp.entites.user.User;
+import com.example.crudapp.services.ServiceInjector;
+import com.example.crudapp.services.ServiceKey;
 
 import java.util.Scanner;
 
 
 public class UserMenuCommand implements Command {
+    private static UserMenuCommand instance;
     private final Service<User> userService;
     private final Scanner scanner;
-    private boolean running = true;
 
-    public UserMenuCommand(Service<User> userService, Scanner scanner) {
+    private UserMenuCommand(Service<User> userService, Scanner scanner) {
         this.userService = userService;
         this.scanner = scanner;
     }
 
-    @Override
-    public void execute() {
-        running = true;
-        while (running) {
-            showMenu();
-            int choice = getMenuChoice();
-            handleChoice(choice);
-
-            if (running && choice != 0) {
-                System.out.println("\nНажмите Enter для продолжения...");
-                scanner.nextLine();
-            }
+    public static synchronized UserMenuCommand getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("UserMenuCommand не был инициализирован");
         }
+
+        return instance;
+    }
+
+    public static synchronized UserMenuCommand getInstance(ServiceInjector serviceInjector, Scanner scanner) {
+        if (instance == null) {
+            instance = new UserMenuCommand(serviceInjector.injectService(ServiceKey.USER_SERVICE), scanner);
+        }
+
+        return instance;
+    }
+
+    @Override
+    public Command execute() {
+        showMenu();
+        int choice = getMenuChoice();
+        return handleChoice(choice);
     }
 
     private void showMenu() {
@@ -44,6 +55,7 @@ public class UserMenuCommand implements Command {
     }
 
     private int getMenuChoice() {
+
         try {
             return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
@@ -51,28 +63,18 @@ public class UserMenuCommand implements Command {
         }
     }
 
-    private void handleChoice(int choice) {
-        switch (choice) {
-            case 1:
-                new ListUsersCommand(userService).execute();
-                break;
-            case 2:
-                new CreateUserCommand(userService, scanner).execute();
-                break;
-            case 3:
-                new ReadUserCommand(userService, scanner).execute();
-                break;
-            case 4:
-                new UpdateUserCommand(userService, scanner).execute();
-                break;
-            case 5:
-                new DeleteUserCommand(userService, scanner).execute();
-                break;
-            case 0:
-                running = false;
-                break;
-            default:
+    private Command handleChoice(int choice) {
+        return switch (choice) {
+            case 1 -> ListUsersCommand.getInstance(userService).execute();
+            case 2 -> CreateUserCommand.getInstance(userService, scanner).execute();
+            case 3 -> ReadUserCommand.getInstance(userService, scanner).execute();
+            case 4 -> UpdateUserCommand.getInstance(userService, scanner).execute();
+            case 5 -> DeleteUserCommand.getInstance(userService, scanner).execute();
+            case 0 -> MainMenuCommand.getInstance().execute();
+            default -> {
                 System.out.println("Неверный выбор. Попробуйте снова.");
-        }
+                yield this.execute();
+            }
+        };
     }
 }

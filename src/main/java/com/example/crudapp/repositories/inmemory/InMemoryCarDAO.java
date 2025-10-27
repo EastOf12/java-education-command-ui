@@ -32,10 +32,13 @@ public class InMemoryCarDAO implements DAO<Car> {
     }
 
     @Override
-    public void update(Car car) {
+    public boolean update(Car car) {
         if (car.getId() != null && cars.containsKey(car.getId())) {
             cars.put(car.getId(), car);
+            return true;
         }
+
+        return false;
     }
 
     @Override

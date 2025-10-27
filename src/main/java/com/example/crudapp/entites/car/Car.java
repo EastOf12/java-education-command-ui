@@ -22,7 +22,6 @@ public class Car extends Entity {
         this.userid = userId;
     }
 
-    //Геттеры
     public String getNumber() {
         return number;
     }
@@ -43,7 +42,6 @@ public class Car extends Entity {
         return color;
     }
 
-    //Сеттеры
     public void setColor(CarColor color) {
         this.color = color;
     }
