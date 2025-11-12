@@ -1,13 +1,11 @@
-package com.example.crudapp.entites.trip;
+package com.example.crudapp.requests.trip;
 
-import com.example.crudapp.api.Entity;
-import com.example.crudapp.entites.user.User;
+import com.example.crudapp.entites.trip.TripScheduling;
+import com.example.crudapp.entites.trip.TripStatus;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
-
-public class Trip extends Entity {
+public class CreateTripRequest {
     private Long creatorId;
     private Long driverId;
     private LocalDateTime createdAt;
@@ -17,31 +15,11 @@ public class Trip extends Entity {
     private TripStatus tripStatus;
     private TripScheduling tripScheduling;
 
-    public Trip() {
-    }
-
-    public Trip(
-            Long creatorId,
-            Long driverId,
-            String description,
-            int seats,
-            int cost
-    ) {
-        this.creatorId = creatorId;
-        this.driverId = driverId;
-        this.createdAt = LocalDateTime.now();
-        this.description = description;
-        this.seats = seats;
-        this.cost = cost;
-        this.tripStatus = new TripStatus("new");
-        this.tripScheduling = new TripScheduling();
-    }
-
     public Long getCreatorId() {
         return creatorId;
     }
 
-    public void setCreator(Long creatorId) {
+    public void setCreatorId(Long creatorId) {
         this.creatorId = creatorId;
     }
 
@@ -61,20 +39,20 @@ public class Trip extends Entity {
         this.createdAt = createdAt;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public int getSeats() {
         return seats;
     }
 
     public void setSeats(int seats) {
         this.seats = seats;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getCost() {
@@ -100,6 +78,4 @@ public class Trip extends Entity {
     public void setTripScheduling(TripScheduling tripScheduling) {
         this.tripScheduling = tripScheduling;
     }
-
-
 }

@@ -27,8 +27,6 @@ public class User extends Entity {
             String lastName,
             Gender gender,
             LocalDate birthday,
-            LocalDateTime createdDate,
-            UserRole role,
             UserContacts userContacts,
             UserAuth userAuth) {
         this.firstName = firstName;
@@ -36,8 +34,8 @@ public class User extends Entity {
         this.gender = gender;
         this.lastName = lastName;
         this.birthday = birthday;
-        this.createdDate = createdDate;
-        this.role = role;
+        this.createdDate = LocalDateTime.now();
+        this.role = new UserRole("public");
         this.userContacts = userContacts;
         this.userAuth = userAuth;
     }

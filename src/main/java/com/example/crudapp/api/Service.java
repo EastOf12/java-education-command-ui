@@ -2,14 +2,18 @@ package com.example.crudapp.api;
 
 import java.util.List;
 
-public interface Service<T extends Entity> {
+public interface Service<
+        T extends Entity,
+        C,
+        U
+        > {
     List<T> getAll();
 
     T getById(Long id);
 
-    void save(T entity);
+    T save(C createRequest);
 
-    boolean update(T entity);
+    T update(Long id, U updateRequest);
 
     void delete(Long id);
 }

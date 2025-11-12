@@ -1,32 +1,41 @@
 package com.example.crudapp.commands.car;
 
 import com.example.crudapp.api.Service;
-import com.example.crudapp.builder.InteractiveBuilder;
+import com.example.crudapp.builder.RequestBuilder;
 import com.example.crudapp.commands.Command;
 import com.example.crudapp.entites.car.Car;
 import com.example.crudapp.entites.car.CarBrand;
 import com.example.crudapp.entites.car.CarColor;
-import com.example.crudapp.entites.passanger.Passenger;
 import com.example.crudapp.entites.user.User;
-
-import java.time.LocalDateTime;
+import com.example.crudapp.requests.car.CreateCarRequest;
+import com.example.crudapp.requests.car.UpdateCarRequest;
+import com.example.crudapp.requests.user.CreateUserRequest;
+import com.example.crudapp.requests.user.UpdateUserRequest;
 import java.util.Scanner;
 
 public class CreateCarCommand implements Command {
     private static CreateCarCommand instance;
-    private final Service<User> userService;
-    private final Service<Car> carService;
+    private final Service<User, CreateUserRequest, UpdateUserRequest> userService;
+    private final Service<Car, CreateCarRequest, UpdateCarRequest> carService;
     private final Scanner scanner;
 
-    private CreateCarCommand(Service<User> userService, Service<Car> carService, Scanner scanner) {
+    private CreateCarCommand(
+            Service<User,
+            CreateUserRequest,
+            UpdateUserRequest> userService,
+            Service<Car,
+            CreateCarRequest,
+            UpdateCarRequest> carService,
+            Scanner scanner
+    ) {
         this.userService = userService;
         this.carService = carService;
         this.scanner = scanner;
     }
 
     public static synchronized CreateCarCommand getInstance(
-            Service<User> userService,
-            Service<Car> carService,
+            Service<User, CreateUserRequest, UpdateUserRequest> userService,
+            Service<Car, CreateCarRequest, UpdateCarRequest> carService,
             Scanner scanner) {
         if (instance == null) {
             instance = new CreateCarCommand(userService, carService, scanner);
@@ -49,7 +58,7 @@ public class CreateCarCommand implements Command {
                 return CarMenuCommand.getInstance().execute();
             }
 
-            Car car = new InteractiveBuilder<>(Car::new)
+            CreateCarRequest createCarRequest = new RequestBuilder<>(CreateCarRequest::new) //Тут передаем создание конструктора
                     .addField("Введите номер автомобиля: ", (sc, c) -> c.setNumber(sc.nextLine()))
                     .addField("Введите максимальное количество свободных мест в автомобиле: ", (sc, c) -> {
                         try {
@@ -63,9 +72,7 @@ public class CreateCarCommand implements Command {
                     .addField("Введите бренд автомобиля: ", (sc, c) -> c.setBrand(new CarBrand(sc.nextLine())))
                     .build(scanner);
 
-            car.setUserid(userId);
-
-            carService.save(car);
+            Car car = carService.save(createCarRequest);
             System.out.println("Автомобиль создан с ID: " + car.getId());
             System.out.println(car);
 

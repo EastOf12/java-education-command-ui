@@ -11,6 +11,7 @@ import com.example.crudapp.repositories.inmemory.InMemoryCarDAO;
 import com.example.crudapp.repositories.inmemory.InMemoryPassengerDAO;
 import com.example.crudapp.repositories.inmemory.InMemoryTripDAO;
 import com.example.crudapp.repositories.inmemory.InMemoryUserDAO;
+import com.example.crudapp.requests.car.CreateCarRequest;
 import com.example.crudapp.services.CarService;
 import com.example.crudapp.services.PassengerService;
 import com.example.crudapp.services.TripService;
@@ -38,7 +39,7 @@ public class ServiceFactory {
         return createService(new InMemoryPassengerDAO(), PassengerService.class);
     }
 
-    public static Service<Car> createCarService() {
+    public static Service<Car, CreateCarRequest> createCarService() {
         return createService(new InMemoryCarDAO(), CarService.class);
     }
 }

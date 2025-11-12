@@ -1,25 +1,27 @@
-package com.example.crudapp.entites.car;
+package com.example.crudapp.requests.car;
 
-import com.example.crudapp.api.Entity;
+import com.example.crudapp.entites.car.CarBrand;
+import com.example.crudapp.entites.car.CarColor;
 
 import java.util.Objects;
 
-public class Car extends Entity {
+public class CreateCarRequest {
     private String number;
-    private Integer maxSeat;
+    private int maxSeat;
     private CarColor color;
     private CarBrand brand;
-    private Long userid;
 
-    public Car() {
+    public Long getUserId() {
+        return userId;
     }
 
-    public Car(String number, int maxSeat, CarColor color, CarBrand brand, Long userId) {
-        this.number = number;
-        this.maxSeat = maxSeat;
-        this.color = color;
-        this.brand = brand;
-        this.userid = userId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    private Long userId;
+
+    public CreateCarRequest() {
     }
 
     public String getNumber() {
@@ -54,21 +56,13 @@ public class Car extends Entity {
         this.brand = brand;
     }
 
-    public Long getUserid() {
-        return userid;
-    }
-
-    public void setUserid(Long userid) {
-        this.userid = userid;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Car car = (Car) o;
-        return maxSeat == car.maxSeat && Objects.equals(number, car.number) && Objects.equals(color, car.color) && Objects.equals(brand, car.brand) && Objects.equals(userid, car.userid);
+        CreateCarRequest that = (CreateCarRequest) o;
+        return maxSeat == that.maxSeat && Objects.equals(number, that.number) && Objects.equals(color, that.color) && Objects.equals(brand, that.brand);
     }
 
     @Override
@@ -77,19 +71,16 @@ public class Car extends Entity {
         result = 31 * result + maxSeat;
         result = 31 * result + Objects.hashCode(color);
         result = 31 * result + Objects.hashCode(brand);
-        result = 31 * result + Objects.hashCode(userid);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Car{" +
+        return "CreateCarRequest{" +
                 "number='" + number + '\'' +
                 ", maxSeat=" + maxSeat +
                 ", color=" + color +
                 ", brand=" + brand +
-                ", userid=" + userid +
-                ", id=" + id +
                 '}';
     }
 }
