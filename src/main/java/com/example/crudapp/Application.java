@@ -2,30 +2,59 @@ package com.example.crudapp;
 
 
 import com.example.crudapp.api.Service;
+import com.example.crudapp.commands.ConsoleMenu;
 import com.example.crudapp.commands.MainMenuCommand;
-import com.example.crudapp.entites.User;
+import com.example.crudapp.entites.car.Car;
+import com.example.crudapp.entites.passanger.Passenger;
+import com.example.crudapp.entites.trip.Trip;
+import com.example.crudapp.entites.user.User;
 import com.example.crudapp.factories.ServiceFactory;
+import com.example.crudapp.repositories.inmemory.InMemoryCarDAO;
+import com.example.crudapp.repositories.inmemory.InMemoryPassengerDAO;
+import com.example.crudapp.repositories.inmemory.InMemoryTripDAO;
+import com.example.crudapp.repositories.inmemory.InMemoryUserDAO;
+import com.example.crudapp.requests.car.CreateCarRequest;
+import com.example.crudapp.requests.car.UpdateCarRequest;
+import com.example.crudapp.requests.passenger.CreatePassengerRequest;
+import com.example.crudapp.requests.passenger.UpdatePassengerRequest;
+import com.example.crudapp.requests.trip.CreateTripRequest;
+import com.example.crudapp.requests.trip.UpdateTripRequest;
+import com.example.crudapp.requests.user.CreateUserRequest;
+import com.example.crudapp.requests.user.UpdateUserRequest;
+import com.example.crudapp.services.*;
 
 import java.util.Scanner;
 
 public class Application {
-    private final Scanner scanner;
-
-    public Application() {
-        this.scanner = new Scanner(System.in);
+    public static void main(String[] args) {
+        new Application().run();
     }
 
     public void run() {
         System.out.println("Добро пожаловать в учебное приложение!");
 
-        Service<User> userService = ServiceFactory.createUserService();
-        MainMenuCommand mainMenu = new MainMenuCommand(userService, scanner);
-        mainMenu.execute();
+        ServiceInjector injector = new ServiceInjector();
 
-        scanner.close();
-    }
+        // Создаём и регистрируем сервисы
+        Service<User, CreateUserRequest, UpdateUserRequest> userService = ServiceFactory.createService(
+                new InMemoryUserDAO(), UserService.class);
 
-    public static void main(String[] args) {
-        new Application().run();
+        Service<Trip, CreateTripRequest, UpdateTripRequest> tripService = ServiceFactory.createService(
+                new InMemoryTripDAO(), TripService.class);
+
+        Service<Passenger, CreatePassengerRequest, UpdatePassengerRequest> passengerService = ServiceFactory.createService(
+                new InMemoryPassengerDAO(), PassengerService.class);
+
+        Service<Car, CreateCarRequest, UpdateCarRequest> carService = ServiceFactory.createService(
+                new InMemoryCarDAO(), CarService.class);
+
+        injector.provide(ServiceKey.USER_SERVICE, userService);
+        injector.provide(ServiceKey.TRIP_SERVICE, tripService);
+        injector.provide(ServiceKey.PASSENGER_SERVICE, passengerService);
+        injector.provide(ServiceKey.CAR_SERVICE, carService);
+
+        // Запускаем консольное меню
+        ConsoleMenu menu = new ConsoleMenu(MainMenuCommand.getInstance(injector, new Scanner(System.in)));
+        menu.run();
     }
 }

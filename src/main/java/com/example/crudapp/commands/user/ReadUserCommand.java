@@ -2,21 +2,27 @@ package com.example.crudapp.commands.user;
 
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
-import com.example.crudapp.entites.User;
+import com.example.crudapp.entites.user.User;
+import com.example.crudapp.requests.user.CreateUserRequest;
+import com.example.crudapp.requests.user.UpdateUserRequest;
 
 import java.util.Scanner;
 
 public class ReadUserCommand implements Command {
-    private final Service<User> userService;
+    private final Service<User, CreateUserRequest, UpdateUserRequest> userService;
     private final Scanner scanner;
 
-    public ReadUserCommand(Service<User> userService, Scanner scanner) {
+    private ReadUserCommand(Service<User, CreateUserRequest, UpdateUserRequest> userService, Scanner scanner) {
         this.userService = userService;
         this.scanner = scanner;
     }
 
+    public static synchronized ReadUserCommand getInstance(Service<User, CreateUserRequest, UpdateUserRequest> userService, Scanner scanner) {
+        return new ReadUserCommand(userService, scanner);
+    }
+
     @Override
-    public void execute() {
+    public Command execute() {
         System.out.println("=== Просмотр пользователя ===");
         System.out.print("Введите ID пользователя: ");
         try {
@@ -30,5 +36,7 @@ public class ReadUserCommand implements Command {
         } catch (NumberFormatException e) {
             System.out.println("Неверный формат ID");
         }
+
+        return UserMenuCommand.getInstance();
     }
 }

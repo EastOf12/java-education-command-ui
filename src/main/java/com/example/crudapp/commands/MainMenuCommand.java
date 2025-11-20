@@ -1,35 +1,50 @@
 package com.example.crudapp.commands;
 
-
-import com.example.crudapp.api.Service;
+import com.example.crudapp.commands.car.CarMenuCommand;
+import com.example.crudapp.commands.passenger.PassengerMenuCommand;
+import com.example.crudapp.commands.trip.TripMenuCommand;
 import com.example.crudapp.commands.user.UserMenuCommand;
-import com.example.crudapp.entites.User;
+import com.example.crudapp.services.ServiceInjector;
 
 import java.util.Scanner;
 
 public class MainMenuCommand implements Command {
-    private final Service<User> userService;
+    private static MainMenuCommand instance;
     private final Scanner scanner;
-    private boolean running = true;
+    private final ServiceInjector serviceInjector;
 
-    public MainMenuCommand(Service<User> userService, Scanner scanner) {
-        this.userService = userService;
+    private MainMenuCommand(ServiceInjector serviceInjector, Scanner scanner) {
+        this.serviceInjector = serviceInjector;
         this.scanner = scanner;
     }
 
-    @Override
-    public void execute() {
-        running = true;
-        while (running) {
-            showMenu();
-            int choice = getMenuChoice();
-            handleChoice(choice);
+    public static synchronized MainMenuCommand getInstance(ServiceInjector serviceInjector, Scanner scanner) {
+        if (instance == null) {
+            instance = new MainMenuCommand(serviceInjector, scanner);
         }
+        return instance;
+    }
+
+    public static synchronized MainMenuCommand getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("MainMenuCommand не был инициализирован");
+        }
+
+        return instance;
+    }
+
+    @Override
+    public Command execute() {
+        showMenu();
+        return handleChoice(getMenuChoice());
     }
 
     private void showMenu() {
         System.out.println("\n=== Главное меню ===");
         System.out.println("1. Работа с пользователями");
+        System.out.println("2. Работа с поездками");
+        System.out.println("3. Работа с пассажирами");
+        System.out.println("4. Работа с автомобилями");
         System.out.println("0. Выход");
         System.out.print("Выберите пункт: ");
     }
@@ -42,17 +57,17 @@ public class MainMenuCommand implements Command {
         }
     }
 
-    private void handleChoice(int choice) {
-        switch (choice) {
-            case 1:
-                new UserMenuCommand(userService, scanner).execute();
-                break;
-            case 0:
-                running = false;
-                System.out.println("До свидания!");
-                break;
-            default:
+    private Command handleChoice(int choice) {
+        return switch (choice) {
+            case 1 -> UserMenuCommand.getInstance(serviceInjector, scanner);
+            case 2 -> TripMenuCommand.getInstance(serviceInjector, scanner);
+            case 3 -> PassengerMenuCommand.getInstance(serviceInjector, scanner);
+            case 4 -> CarMenuCommand.getInstance(serviceInjector, scanner);
+            case 0 -> ExitCommand.getInstance(scanner);
+            default -> {
                 System.out.println("Неверный выбор. Попробуйте снова.");
-        }
+                yield this;
+            }
+        };
     }
 }

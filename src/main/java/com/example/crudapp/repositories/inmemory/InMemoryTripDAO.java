@@ -1,0 +1,55 @@
+package com.example.crudapp.repositories.inmemory;
+
+import com.example.crudapp.api.DAO;
+import com.example.crudapp.entites.trip.Trip;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
+
+public class InMemoryTripDAO implements DAO<Trip> {
+    private final Map<Long, Trip> trips = new ConcurrentHashMap<>();
+    private final AtomicLong idGenerator = new AtomicLong(1);
+
+    @Override
+    public boolean save(Trip trip) {
+        if (trip.getId() == null) {
+            trip.setId(idGenerator.getAndIncrement());
+        }
+        trips.put(trip.getId(), trip);
+
+        return true;
+    }
+
+    @Override
+    public Trip findById(Long id) {
+        return trips.get(id);
+    }
+
+    @Override
+    public List<Trip> findAll() {
+        return new ArrayList<>(trips.values());
+    }
+
+    @Override
+    public boolean update(Trip trip) {
+        if (trip.getId() != null && trips.containsKey(trip.getId())) {
+            trips.put(trip.getId(), trip);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        if(trips.containsKey(id)) {
+            trips.remove(id);
+            return true;
+        }
+
+        return false;
+    }
+}

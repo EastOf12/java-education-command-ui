@@ -2,9 +2,11 @@ package com.example.crudapp.repositories.inmemory;
 
 
 import com.example.crudapp.api.DAO;
-import com.example.crudapp.entites.User;
+import com.example.crudapp.entites.user.User;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -13,11 +15,13 @@ public class InMemoryUserDAO implements DAO<User> {
     private final AtomicLong idGenerator = new AtomicLong(1);
 
     @Override
-    public void save(User user) {
+    public boolean save(User user) {
         if (user.getId() == null) {
             user.setId(idGenerator.getAndIncrement());
         }
         users.put(user.getId(), user);
+
+        return true;
     }
 
     @Override
@@ -31,14 +35,22 @@ public class InMemoryUserDAO implements DAO<User> {
     }
 
     @Override
-    public void update(User user) {
+    public boolean update(User user) {
         if (user.getId() != null && users.containsKey(user.getId())) {
             users.put(user.getId(), user);
+            return true;
         }
+
+        return false;
     }
 
     @Override
-    public void delete(Long id) {
-        users.remove(id);
+    public boolean delete(Long id) {
+        if(users.containsKey(id)) {
+            users.remove(id);
+            return true;
+        }
+
+        return false;
     }
 }
