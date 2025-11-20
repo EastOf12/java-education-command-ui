@@ -3,21 +3,23 @@ package com.example.crudapp.commands.trip;
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
 import com.example.crudapp.entites.trip.Trip;
+import com.example.crudapp.requests.trip.CreateTripRequest;
+import com.example.crudapp.requests.trip.UpdateTripRequest;
 
 import java.util.Scanner;
 
 
 public class ReadTripCommand implements Command {
     private static ReadTripCommand instance;
-    private final Service<Trip> tripService;
+    private final Service<Trip, CreateTripRequest, UpdateTripRequest> tripService;
     private final Scanner scanner;
 
-    private ReadTripCommand(Service<Trip> tripService, Scanner scanner) {
+    private ReadTripCommand(Service<Trip, CreateTripRequest, UpdateTripRequest> tripService, Scanner scanner) {
         this.tripService = tripService;
         this.scanner = scanner;
     }
 
-    public static synchronized ReadTripCommand getInstance(Service<Trip> tripService, Scanner scanner) {
+    public static synchronized ReadTripCommand getInstance(Service<Trip, CreateTripRequest, UpdateTripRequest> tripService, Scanner scanner) {
         if (instance == null) {
             instance = new ReadTripCommand(tripService, scanner);
         }
@@ -40,6 +42,6 @@ public class ReadTripCommand implements Command {
             System.out.println("Неверный формат ID");
         }
 
-        return TripMenuCommand.getInstance().execute();
+        return TripMenuCommand.getInstance();
     }
 }

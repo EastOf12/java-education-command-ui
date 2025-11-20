@@ -1,19 +1,20 @@
 package com.example.crudapp.requests.trip;
 
 import com.example.crudapp.entites.trip.TripScheduling;
-import com.example.crudapp.entites.trip.TripStatus;
 
-import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class CreateTripRequest {
     private Long creatorId;
     private Long driverId;
-    private LocalDateTime createdAt;
     private String description;
     private int seats;
     private int cost;
-    private TripStatus tripStatus;
     private TripScheduling tripScheduling;
+
+    public CreateTripRequest() {
+        this.tripScheduling = new TripScheduling();
+    }
 
     public Long getCreatorId() {
         return creatorId;
@@ -29,14 +30,6 @@ public class CreateTripRequest {
 
     public void setDriverId(Long driverId) {
         this.driverId = driverId;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     public int getSeats() {
@@ -63,19 +56,23 @@ public class CreateTripRequest {
         this.cost = cost;
     }
 
-    public TripStatus getTripStatus() {
-        return tripStatus;
-    }
-
-    public void setTripStatus(TripStatus tripStatus) {
-        this.tripStatus = tripStatus;
-    }
-
     public TripScheduling getTripScheduling() {
         return tripScheduling;
     }
 
     public void setTripScheduling(TripScheduling tripScheduling) {
         this.tripScheduling = tripScheduling;
+    }
+
+    @Override
+    public String toString() {
+        return "CreateTripRequest{" +
+                "creatorId=" + creatorId +
+                ", driverId=" + driverId +
+                ", description='" + description + '\'' +
+                ", seats=" + seats +
+                ", cost=" + cost +
+                ", tripScheduling=" + tripScheduling +
+                '}';
     }
 }

@@ -24,11 +24,14 @@ public class UpdateUserCommand implements Command {
         this.scanner = scanner;
     }
 
-    public static synchronized UpdateUserCommand getInstance(Service<User, CreateUserRequest, UpdateUserRequest> userService, Scanner scanner) {
+    public static synchronized UpdateUserCommand getInstance(
+            Service<User, CreateUserRequest, UpdateUserRequest> userService,
+            Scanner scanner) {
         if (instance == null) {
             instance = new UpdateUserCommand(userService, scanner);
         }
-        return instance;
+
+        return new UpdateUserCommand(userService, scanner);
     }
 
     @Override
@@ -42,42 +45,63 @@ public class UpdateUserCommand implements Command {
                 System.out.println("Текущие данные: " + user);
 
                 UpdateUserRequest updateUserRequest = new RequestBuilder<>(UpdateUserRequest::new)
-                        .addField("Введите новое имя (или Enter для пропуска): ", (sc, c) -> c.setFirstName(sc.nextLine()))
-                        .addField("Введите новую фамилию (или Enter для пропуска): ", (sc, c) -> c.setMiddleName(sc.nextLine()))
-                        .addField("Введите новое отчество (или Enter для пропуска): ", (sc, c) -> c.setLastName(sc.nextLine()))
+                        .addField("Введите новое имя (или Enter для пропуска): ", (sc, c) -> {
+                            String firstName = sc.nextLine();
+
+                            if (!firstName.isEmpty()) {
+                                c.setFirstName(firstName);
+                            }
+                        })
+                        .addField("Введите новую фамилию (или Enter для пропуска): ", (sc, c) -> {
+                            String middleName = sc.nextLine();
+
+                            if (!middleName.isEmpty()) {
+                                c.setMiddleName(middleName);
+                            }
+                        })
+                        .addField("Введите новое отчество (или Enter для пропуска): ", (sc, c) -> {
+                            String lastName = sc.nextLine();
+
+                            if (!lastName.isEmpty()) {
+                                c.setLastName(lastName);
+                            }
+                        })
                         .addField("Введите новый пол (или Enter для пропуска): ", (sc, c) -> {
                             String gender = sc.nextLine();
-
-                            if(!gender.isEmpty()) {
-                                c.setGender(Gender.valueOf(gender));
+                            if (!gender.isEmpty()) {
+                                try {
+                                    c.setGender(Gender.valueOf(gender));
+                                } catch (IllegalArgumentException e) {
+                                    System.out.println("Неверный пол. Поле не изменено.");
+                                }
                             }
                         })
                         .addField("Введите новую дату рождения (dd/MM/yyyy) (или Enter для пропуска): ", (sc, c) -> {
-                            String birthday = scanner.nextLine();
+                            String birthday = sc.nextLine();
                             if (!birthday.isEmpty()) {
                                 c.setBirthday(LocalDate.parse(birthday, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
                             }
                         })
                         .addField("Введите новую роль (или Enter для пропуска): ", (sc, c) -> {
-                            String role = scanner.nextLine();
+                            String role = sc.nextLine();
                             if (!role.isEmpty()) {
                                 c.setUserRole(new UserRole(role));
                             }
                         })
                         .addField("Введите новый email (или Enter для пропуска): ", (sc, c) -> {
-                            String email = scanner.nextLine();
+                            String email = sc.nextLine();
                             if (!email.isEmpty()) {
                                 c.getUserContacts().setEmail(email);
                             }
                         })
                         .addField("Введите новый номер телефона (или Enter для пропуска): ", (sc, c) -> {
-                            String phoneNumber = scanner.nextLine();
+                            String phoneNumber = sc.nextLine();
                             if (!phoneNumber.isEmpty()) {
                                 c.getUserContacts().setPhoneNumber(phoneNumber);
                             }
                         })
                         .addField("Введите новый пароль (или Enter для пропуска): ", (sc, c) -> {
-                            String password = scanner.nextLine();
+                            String password = sc.nextLine();
                             if (!password.isEmpty()) {
                                 c.getUserAuth().setPassword(password);
                                 c.getUserAuth().setLastPasswordReset(LocalDateTime.now());
@@ -86,7 +110,7 @@ public class UpdateUserCommand implements Command {
                         .build(scanner);
 
 
-                if(userService.update(id, updateUserRequest) != null) {
+                if (userService.update(id, updateUserRequest) != null) {
                     System.out.println("Пользователь обновлен");
                 } else {
                     System.out.println("Пользователь не обновлен");
@@ -98,6 +122,6 @@ public class UpdateUserCommand implements Command {
             System.out.println("Неверный формат ID");
         }
 
-        return UserMenuCommand.getInstance().execute();
+        return UserMenuCommand.getInstance();
     }
 }

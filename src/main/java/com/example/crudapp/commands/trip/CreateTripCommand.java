@@ -1,12 +1,9 @@
 package com.example.crudapp.commands.trip;
 
 import com.example.crudapp.api.Service;
-import com.example.crudapp.builder.InteractiveBuilder;
 import com.example.crudapp.builder.RequestBuilder;
 import com.example.crudapp.commands.Command;
 import com.example.crudapp.entites.trip.Trip;
-import com.example.crudapp.entites.trip.TripScheduling;
-import com.example.crudapp.entites.trip.TripStatus;
 import com.example.crudapp.entites.user.User;
 import com.example.crudapp.requests.trip.CreateTripRequest;
 import com.example.crudapp.requests.trip.UpdateTripRequest;
@@ -64,7 +61,7 @@ public class CreateTripCommand implements Command {
                     if (!input.isEmpty()) {
                         try {
                             Long driverId = Long.valueOf(input);
-                            if ( userService.getById(driverId) == null) {
+                            if (userService.getById(driverId) == null) {
                                 System.out.println("Водитель с ID " + driverId + " не найден.");
                             }
                             c.setDriverId(driverId);
@@ -89,22 +86,6 @@ public class CreateTripCommand implements Command {
                     }
                     c.setSeats(seats);
                 })
-                .addField("Введите описание поездки: ", (sc, t) -> t.setDescription(sc.nextLine()))
-                .addField("Укажите количество свободных мест: ", (sc, t) -> {
-                    int seats = 0;
-                    while (seats < 1) {
-                        try {
-                            seats = Integer.parseInt(sc.nextLine());
-                            if (seats < 1) {
-                                System.out.println("Количество мест должно быть ≥ 1. Повторите ввод:");
-                            }
-                        } catch (NumberFormatException e) {
-                            System.out.println("Неверный формат. Введите целое число ≥ 1:");
-                            seats = 0;
-                        }
-                    }
-                    t.setSeats(seats);
-                })
                 .addField("Укажите стоимость поездки: ", (sc, t) -> {
                     int cost = 0;
                     while (cost < 1) {
@@ -120,33 +101,33 @@ public class CreateTripCommand implements Command {
                     }
                     t.setCost(cost);
                 })
-                .addField("Укажите планируемую дату и время поездки в формате " + DATE_TIME_FORMAT, (sc,c) -> {
-                    c.getTripScheduling().setPlanedArrivalDateTime(readLocalDateTime(sc));
-                })
-                .addField("Укажите планируемую дату и время прибытия в формате " + DATE_TIME_FORMAT, (sc,c) -> {
+                .addField("Укажите планируемую дату и время поездки в формате dd/MM/yyyy HH:mm ", (sc, c) -> {
                     c.getTripScheduling().setPlanedDepartureDateTime(readLocalDateTime(sc));
+                })
+                .addField("Укажите планируемую дату и время прибытия в формате dd/MM/yyyy HH:mm ", (sc, c) -> {
+                    c.getTripScheduling().setPlanedArrivalDateTime(readLocalDateTime(sc));
                 })
                 .build(scanner);
 
 
         Trip trip = tripService.save(createTripRequest);
 
-        if(trip != null) {
+        if (trip != null) {
             System.out.println("Поездка создана с ID: " + trip.getId());
             System.out.println(trip);
         }
 
-        return TripMenuCommand.getInstance().execute();
+        return TripMenuCommand.getInstance();
     }
 
-    private LocalDateTime readLocalDateTime(Scanner scanner) {
+    private LocalDateTime readLocalDateTime(Scanner sc) {
         LocalDateTime dateTime = null;
         while (dateTime == null) {
             try {
-                String input = scanner.nextLine();
+                String input = sc.nextLine();
                 dateTime = LocalDateTime.parse(input, DATE_TIME_FORMAT);
             } catch (DateTimeParseException e) {
-                System.out.println("Ошибка: неверный формат даты. Пожалуйста, введите дату в формате " + DATE_TIME_FORMAT);
+                System.out.println("Ошибка: неверный формат даты. Пожалуйста, введите дату в формате dd/MM/yyyy HH:mm ");
             }
         }
         return dateTime;

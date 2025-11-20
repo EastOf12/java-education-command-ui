@@ -1,10 +1,9 @@
 package com.example.crudapp.entites.trip;
 
+import com.example.crudapp.ObjectUtils;
 import com.example.crudapp.api.Entity;
-import com.example.crudapp.entites.user.User;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 
 public class Trip extends Entity {
@@ -25,7 +24,8 @@ public class Trip extends Entity {
             Long driverId,
             String description,
             int seats,
-            int cost
+            int cost,
+            TripScheduling tripScheduling
     ) {
         this.creatorId = creatorId;
         this.driverId = driverId;
@@ -34,7 +34,7 @@ public class Trip extends Entity {
         this.seats = seats;
         this.cost = cost;
         this.tripStatus = new TripStatus("new");
-        this.tripScheduling = new TripScheduling();
+        this.tripScheduling = tripScheduling;
     }
 
     public Long getCreatorId() {
@@ -101,5 +101,30 @@ public class Trip extends Entity {
         this.tripScheduling = tripScheduling;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return ObjectUtils.equals(this, o, "creatorId", "driverId", "createdAt", "description", "seats",
+                "cost", "tripStatus", "tripScheduling");
+    }
 
+    @Override
+    public int hashCode() {
+        return ObjectUtils.hashCode(this,"creatorId", "driverId", "createdAt", "description",
+                "seats", "cost", "tripStatus", "tripScheduling");
+    }
+
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "creatorId=" + creatorId +
+                ", driverId=" + driverId +
+                ", createdAt=" + createdAt +
+                ", description='" + description + '\'' +
+                ", seats=" + seats +
+                ", cost=" + cost +
+                ", tripStatus=" + tripStatus +
+                ", tripScheduling=" + tripScheduling +
+                ", id=" + id +
+                '}';
+    }
 }

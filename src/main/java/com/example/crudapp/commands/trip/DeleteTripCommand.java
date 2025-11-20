@@ -4,22 +4,24 @@ import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
 import com.example.crudapp.commands.Confirm;
 import com.example.crudapp.entites.trip.Trip;
+import com.example.crudapp.requests.trip.CreateTripRequest;
+import com.example.crudapp.requests.trip.UpdateTripRequest;
 
 import java.util.Scanner;
 
 public class DeleteTripCommand implements Command {
     private static DeleteTripCommand instance;
-    private final Service<Trip> tripService;
+    private final Service<Trip, CreateTripRequest, UpdateTripRequest> tripService;
     private final Scanner scanner;
 
     private DeleteTripCommand(
-            Service<Trip> tripService,
+            Service<Trip, CreateTripRequest, UpdateTripRequest> tripService,
             Scanner scanner) {
         this.tripService = tripService;
         this.scanner = scanner;
     }
 
-    public static synchronized DeleteTripCommand getInstance(Service<Trip> tripService, Scanner scanner) {
+    public static synchronized DeleteTripCommand getInstance(Service<Trip, CreateTripRequest, UpdateTripRequest> tripService, Scanner scanner) {
         if (instance == null) {
             instance = new DeleteTripCommand(tripService, scanner);
         }
@@ -39,8 +41,11 @@ public class DeleteTripCommand implements Command {
                 System.out.print("Подтвердите удаление (y/n): ");
                 String confirm = scanner.nextLine();
                 if (Confirm.valueOf(confirm).equals(Confirm.y)) {
-                    tripService.delete(id);
-                    System.out.println("Поездка удалена");
+                    if(tripService.delete(id)) {
+                        System.out.println("Поездка удалена");
+                    } else {
+                        System.out.println("Ошибка при удалении поездки");
+                    }
                 } else {
                     System.out.println("Удаление отменено");
                 }
@@ -51,6 +56,6 @@ public class DeleteTripCommand implements Command {
             System.out.println("Неверный формат ID");
         }
 
-        return TripMenuCommand.getInstance().execute();
+        return TripMenuCommand.getInstance();
     }
 }

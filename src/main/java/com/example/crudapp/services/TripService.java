@@ -31,7 +31,7 @@ public class TripService implements Service<Trip, CreateTripRequest, UpdateTripR
     public Trip save(CreateTripRequest createTripRequest) {
         Trip trip = TripMappers.mapToNewTrip(createTripRequest);
 
-        if(tripDAO.save(trip)) {
+        if (tripDAO.save(trip)) {
             return trip;
         } else {
             System.out.println("Ошибка при сохранении поездки");
@@ -43,13 +43,13 @@ public class TripService implements Service<Trip, CreateTripRequest, UpdateTripR
     public Trip update(Long id, UpdateTripRequest updateTripRequest) {
         Trip tripUpdate = getById(id);
 
-        if(tripUpdate == null) {
+        if (tripUpdate == null) {
             throw new NotFoundException("Поездка с ID " + id + " не найден.");
         }
 
         Trip trip = TripMappers.mapToUpdateTrip(tripUpdate, updateTripRequest);
 
-        if(tripDAO.update(trip)) {
+        if (tripDAO.update(trip)) {
             return trip;
         } else {
             System.out.println("Ошибка при обновлении поездки");
@@ -58,7 +58,7 @@ public class TripService implements Service<Trip, CreateTripRequest, UpdateTripR
     }
 
     @Override
-    public void delete(Long id) {
-        tripDAO.delete(id);
+    public boolean delete(Long id) {
+        return tripDAO.delete(id);
     }
 }

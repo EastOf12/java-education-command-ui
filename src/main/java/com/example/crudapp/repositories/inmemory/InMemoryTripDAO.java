@@ -14,11 +14,13 @@ public class InMemoryTripDAO implements DAO<Trip> {
     private final AtomicLong idGenerator = new AtomicLong(1);
 
     @Override
-    public void save(Trip trip) {
+    public boolean save(Trip trip) {
         if (trip.getId() == null) {
             trip.setId(idGenerator.getAndIncrement());
         }
         trips.put(trip.getId(), trip);
+
+        return true;
     }
 
     @Override
@@ -42,7 +44,12 @@ public class InMemoryTripDAO implements DAO<Trip> {
     }
 
     @Override
-    public void delete(Long id) {
-        trips.remove(id);
+    public boolean delete(Long id) {
+        if(trips.containsKey(id)) {
+            trips.remove(id);
+            return true;
+        }
+
+        return false;
     }
 }

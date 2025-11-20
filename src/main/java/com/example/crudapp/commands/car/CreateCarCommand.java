@@ -11,6 +11,7 @@ import com.example.crudapp.requests.car.CreateCarRequest;
 import com.example.crudapp.requests.car.UpdateCarRequest;
 import com.example.crudapp.requests.user.CreateUserRequest;
 import com.example.crudapp.requests.user.UpdateUserRequest;
+
 import java.util.Scanner;
 
 public class CreateCarCommand implements Command {
@@ -21,11 +22,11 @@ public class CreateCarCommand implements Command {
 
     private CreateCarCommand(
             Service<User,
-            CreateUserRequest,
-            UpdateUserRequest> userService,
+                    CreateUserRequest,
+                    UpdateUserRequest> userService,
             Service<Car,
-            CreateCarRequest,
-            UpdateCarRequest> carService,
+                    CreateCarRequest,
+                    UpdateCarRequest> carService,
             Scanner scanner
     ) {
         this.userService = userService;
@@ -50,12 +51,12 @@ public class CreateCarCommand implements Command {
         System.out.print("Введите id пользователя, которому нужно добавить автомобиль: ");
 
         try {
-            long userId = Long.parseLong(scanner.nextLine());
+            Long userId = Long.parseLong(scanner.nextLine());
             User user = userService.getById(userId);
 
             if (user == null) {
                 System.out.println("Пользователь с id " + userId + " не найден");
-                return CarMenuCommand.getInstance().execute();
+                return CarMenuCommand.getInstance();
             }
 
             CreateCarRequest createCarRequest = new RequestBuilder<>(CreateCarRequest::new) //Тут передаем создание конструктора
@@ -72,6 +73,8 @@ public class CreateCarCommand implements Command {
                     .addField("Введите бренд автомобиля: ", (sc, c) -> c.setBrand(new CarBrand(sc.nextLine())))
                     .build(scanner);
 
+            createCarRequest.setUserId(userId);
+
             Car car = carService.save(createCarRequest);
             System.out.println("Автомобиль создан с ID: " + car.getId());
             System.out.println(car);
@@ -80,6 +83,6 @@ public class CreateCarCommand implements Command {
             System.out.println("Неверный формат ID пользователя");
         }
 
-        return CarMenuCommand.getInstance().execute();
+        return CarMenuCommand.getInstance();
     }
 }

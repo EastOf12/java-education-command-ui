@@ -11,5 +11,5 @@ public interface DAO<T extends Entity> {
 
     boolean update(T entity);
 
-    void delete(Long id);
+    boolean delete(Long id);
 }

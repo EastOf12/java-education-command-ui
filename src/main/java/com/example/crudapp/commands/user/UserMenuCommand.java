@@ -4,6 +4,8 @@ import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
 import com.example.crudapp.commands.MainMenuCommand;
 import com.example.crudapp.entites.user.User;
+import com.example.crudapp.requests.user.CreateUserRequest;
+import com.example.crudapp.requests.user.UpdateUserRequest;
 import com.example.crudapp.services.ServiceInjector;
 import com.example.crudapp.services.ServiceKey;
 
@@ -12,10 +14,10 @@ import java.util.Scanner;
 
 public class UserMenuCommand implements Command {
     private static UserMenuCommand instance;
-    private final Service<User> userService;
+    private final Service<User, CreateUserRequest, UpdateUserRequest> userService;
     private final Scanner scanner;
 
-    private UserMenuCommand(Service<User> userService, Scanner scanner) {
+    private UserMenuCommand(Service<User, CreateUserRequest, UpdateUserRequest> userService, Scanner scanner) {
         this.userService = userService;
         this.scanner = scanner;
     }
@@ -65,15 +67,15 @@ public class UserMenuCommand implements Command {
 
     private Command handleChoice(int choice) {
         return switch (choice) {
-            case 1 -> ListUsersCommand.getInstance(userService).execute();
-            case 2 -> CreateUserCommand.getInstance(userService, scanner).execute();
-            case 3 -> ReadUserCommand.getInstance(userService, scanner).execute();
-            case 4 -> UpdateUserCommand.getInstance(userService, scanner).execute();
-            case 5 -> DeleteUserCommand.getInstance(userService, scanner).execute();
-            case 0 -> MainMenuCommand.getInstance().execute();
+            case 1 -> ListUsersCommand.getInstance(userService);
+            case 2 -> CreateUserCommand.getInstance(userService, scanner);
+            case 3 -> ReadUserCommand.getInstance(userService, scanner);
+            case 4 -> UpdateUserCommand.getInstance(userService, scanner);
+            case 5 -> DeleteUserCommand.getInstance(userService, scanner);
+            case 0 -> MainMenuCommand.getInstance();
             default -> {
                 System.out.println("Неверный выбор. Попробуйте снова.");
-                yield this.execute();
+                yield this;
             }
         };
     }

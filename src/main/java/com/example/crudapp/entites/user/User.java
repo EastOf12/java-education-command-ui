@@ -1,6 +1,7 @@
 package com.example.crudapp.entites.user;
 
 
+import com.example.crudapp.ObjectUtils;
 import com.example.crudapp.api.Entity;
 
 import java.time.LocalDate;
@@ -114,32 +115,14 @@ public class User extends Entity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-        return Objects.equals(firstName, user.firstName) &&
-                Objects.equals(middleName, user.middleName) &&
-                Objects.equals(lastName, user.lastName) && gender == user.gender &&
-                Objects.equals(birthday, user.birthday) &&
-                Objects.equals(createdDate, user.createdDate) &&
-                Objects.equals(role, user.role) &&
-                Objects.equals(userContacts, user.userContacts) &&
-                Objects.equals(userAuth, user.userAuth);
+        return ObjectUtils.equals(this, o, "firstName", "middleName", "lastName", "gender", "birthday",
+                "createdDate", "role", "userContacts", "userAuth");
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hashCode(firstName);
-        result = 31 * result + Objects.hashCode(middleName);
-        result = 31 * result + Objects.hashCode(lastName);
-        result = 31 * result + Objects.hashCode(gender);
-        result = 31 * result + Objects.hashCode(birthday);
-        result = 31 * result + Objects.hashCode(createdDate);
-        result = 31 * result + Objects.hashCode(role);
-        result = 31 * result + Objects.hashCode(userContacts);
-        result = 31 * result + Objects.hashCode(userAuth);
-        return result;
+        return ObjectUtils.hashCode(this, "firstName", "middleName", "lastName", "gender", "birthday",
+                "createdDate", "role", "userContacts", "userAuth");
     }
 
     @Override

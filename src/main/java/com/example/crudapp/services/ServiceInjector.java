@@ -12,7 +12,6 @@ public class ServiceInjector {
     }
 
     // Получение сервиса по ключу с приведением типа
-    @SuppressWarnings("unchecked")
     public <T> T injectService(ServiceKey key) {
         T service = (T) services.get(key);
         if (service == null) {

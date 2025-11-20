@@ -3,22 +3,24 @@ package com.example.crudapp.commands.car;
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
 import com.example.crudapp.entites.car.Car;
+import com.example.crudapp.requests.car.CreateCarRequest;
+import com.example.crudapp.requests.car.UpdateCarRequest;
 
 import java.util.Scanner;
 
 public class ReadCarCommand implements Command {
 
     private static ReadCarCommand instance;
-    private final Service<Car> carService;
+    private final Service<Car, CreateCarRequest, UpdateCarRequest> carService;
     private final Scanner scanner;
 
-    private ReadCarCommand(Service<Car> carService, Scanner scanner) {
+    private ReadCarCommand(Service<Car, CreateCarRequest, UpdateCarRequest> carService, Scanner scanner) {
         this.carService = carService;
         this.scanner = scanner;
     }
 
     public static synchronized ReadCarCommand getInstance(
-            Service<Car> carService, Scanner scanner) {
+            Service<Car, CreateCarRequest, UpdateCarRequest> carService, Scanner scanner) {
         if (instance == null) {
             instance = new ReadCarCommand(carService, scanner);
         }
@@ -41,6 +43,6 @@ public class ReadCarCommand implements Command {
             System.out.println("Неверный формат ID");
         }
 
-        return CarMenuCommand.getInstance().execute();
+        return CarMenuCommand.getInstance();
     }
 }

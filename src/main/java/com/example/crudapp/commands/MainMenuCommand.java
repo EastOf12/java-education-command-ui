@@ -59,14 +59,14 @@ public class MainMenuCommand implements Command {
 
     private Command handleChoice(int choice) {
         return switch (choice) {
-            case 1 -> UserMenuCommand.getInstance(serviceInjector, scanner).execute();
-            case 2 -> TripMenuCommand.getInstance(serviceInjector, scanner).execute();
-            case 3 -> PassengerMenuCommand.getInstance(serviceInjector, scanner).execute();
-            case 4 -> CarMenuCommand.getInstance(serviceInjector, scanner).execute();
-            case 0 -> ExitCommand.getInstance(scanner).execute();
+            case 1 -> UserMenuCommand.getInstance(serviceInjector, scanner);
+            case 2 -> TripMenuCommand.getInstance(serviceInjector, scanner);
+            case 3 -> PassengerMenuCommand.getInstance(serviceInjector, scanner);
+            case 4 -> CarMenuCommand.getInstance(serviceInjector, scanner);
+            case 0 -> ExitCommand.getInstance(scanner);
             default -> {
                 System.out.println("Неверный выбор. Попробуйте снова.");
-                yield this.execute();
+                yield this;
             }
         };
     }

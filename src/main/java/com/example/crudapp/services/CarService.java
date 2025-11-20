@@ -31,7 +31,7 @@ public class CarService implements Service<Car, CreateCarRequest, UpdateCarReque
     public Car save(CreateCarRequest createCarRequest) {
         Car car = CarMapper.mapToNewCar(createCarRequest);
 
-        if(carDAO.save(car)) {
+        if (carDAO.save(car)) {
             return car;
         } else {
             System.out.println("Ошибка при сохранении автомобиля");
@@ -43,13 +43,13 @@ public class CarService implements Service<Car, CreateCarRequest, UpdateCarReque
     public Car update(Long id, UpdateCarRequest updateCarRequest) {
         Car updateCar = getById(id);
 
-        if(updateCar == null) {
+        if (updateCar == null) {
             throw new NotFoundException("Автомобиль с ID " + id + " не найден.");
         }
 
         Car car = CarMapper.mapToUpdateCar(updateCar, updateCarRequest);
 
-        if(carDAO.update(car)) {
+        if (carDAO.update(car)) {
             return car;
         } else {
             System.out.println("Ошибка при обновлении автомобиля");
@@ -58,7 +58,7 @@ public class CarService implements Service<Car, CreateCarRequest, UpdateCarReque
     }
 
     @Override
-    public void delete(Long id) {
-        carDAO.delete(id);
+    public boolean delete(Long id) {
+        return carDAO.delete(id);
     }
 }

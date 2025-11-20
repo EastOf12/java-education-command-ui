@@ -9,14 +9,19 @@ import com.example.crudapp.entites.passanger.Passenger;
 import com.example.crudapp.entites.trip.Trip;
 import com.example.crudapp.entites.user.User;
 import com.example.crudapp.factories.ServiceFactory;
+import com.example.crudapp.repositories.inmemory.InMemoryCarDAO;
+import com.example.crudapp.repositories.inmemory.InMemoryPassengerDAO;
+import com.example.crudapp.repositories.inmemory.InMemoryTripDAO;
+import com.example.crudapp.repositories.inmemory.InMemoryUserDAO;
 import com.example.crudapp.requests.car.CreateCarRequest;
 import com.example.crudapp.requests.car.UpdateCarRequest;
 import com.example.crudapp.requests.passenger.CreatePassengerRequest;
 import com.example.crudapp.requests.passenger.UpdatePassengerRequest;
 import com.example.crudapp.requests.trip.CreateTripRequest;
 import com.example.crudapp.requests.trip.UpdateTripRequest;
-import com.example.crudapp.services.ServiceInjector;
-import com.example.crudapp.services.ServiceKey;
+import com.example.crudapp.requests.user.CreateUserRequest;
+import com.example.crudapp.requests.user.UpdateUserRequest;
+import com.example.crudapp.services.*;
 
 import java.util.Scanner;
 
@@ -31,10 +36,17 @@ public class Application {
         ServiceInjector injector = new ServiceInjector();
 
         // Создаём и регистрируем сервисы
-        Service<User, CreateCarRequest, UpdateCarRequest> userService = ServiceFactory.createUserService();
-        Service<Trip, CreateTripRequest, UpdateTripRequest> tripService = ServiceFactory.createTripService();
-        Service<Passenger, CreatePassengerRequest, UpdatePassengerRequest> passengerService = ServiceFactory.createPassengerService();
-        Service<Car, CreateCarRequest, UpdateCarRequest> carService = ServiceFactory.createCarService();
+        Service<User, CreateUserRequest, UpdateUserRequest> userService = ServiceFactory.createService(
+                new InMemoryUserDAO(), UserService.class);
+
+        Service<Trip, CreateTripRequest, UpdateTripRequest> tripService = ServiceFactory.createService(
+                new InMemoryTripDAO(), TripService.class);
+
+        Service<Passenger, CreatePassengerRequest, UpdatePassengerRequest> passengerService = ServiceFactory.createService(
+                new InMemoryPassengerDAO(), PassengerService.class);
+
+        Service<Car, CreateCarRequest, UpdateCarRequest> carService = ServiceFactory.createService(
+                new InMemoryCarDAO(), CarService.class);
 
         injector.provide(ServiceKey.USER_SERVICE, userService);
         injector.provide(ServiceKey.TRIP_SERVICE, tripService);

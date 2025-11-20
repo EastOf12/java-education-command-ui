@@ -21,20 +21,6 @@ public class TripStatus {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        TripStatus that = (TripStatus) o;
-        return Objects.equals(status, that.status);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(status);
-    }
-
-    @Override
     public String toString() {
         return "TripStatus{" +
                 "status='" + status + '\'' +

@@ -21,20 +21,6 @@ public class UserRole {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        UserRole userRole = (UserRole) o;
-        return Objects.equals(role, userRole.role);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(role);
-    }
-
-    @Override
     public String toString() {
         return "UserRole{" +
                 "role='" + role + '\'' +

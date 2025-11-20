@@ -14,11 +14,13 @@ public class InMemoryPassengerDAO implements DAO<Passenger> {
     private final AtomicLong idGenerator = new AtomicLong(1);
 
     @Override
-    public void save(Passenger passenger) {
+    public boolean save(Passenger passenger) {
         if (passenger.getId() == null) {
             passenger.setId(idGenerator.getAndIncrement());
         }
         passengers.put(passenger.getId(), passenger);
+
+        return true;
     }
 
     @Override
@@ -42,7 +44,12 @@ public class InMemoryPassengerDAO implements DAO<Passenger> {
     }
 
     @Override
-    public void delete(Long id) {
-        passengers.remove(id);
+    public boolean delete(Long id) {
+        if(passengers.containsKey(id)) {
+            passengers.remove(id);
+            return true;
+        }
+
+        return false;
     }
 }

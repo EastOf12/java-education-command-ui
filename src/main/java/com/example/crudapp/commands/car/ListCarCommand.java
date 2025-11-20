@@ -3,17 +3,19 @@ package com.example.crudapp.commands.car;
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
 import com.example.crudapp.entites.car.Car;
+import com.example.crudapp.requests.car.CreateCarRequest;
+import com.example.crudapp.requests.car.UpdateCarRequest;
 
 public class ListCarCommand implements Command {
 
     private static ListCarCommand instance;
-    private final Service<Car> carService;
+    private final Service<Car, CreateCarRequest, UpdateCarRequest> carService;
 
-    private ListCarCommand(Service<Car> carService) {
+    private ListCarCommand(Service<Car, CreateCarRequest, UpdateCarRequest> carService) {
         this.carService = carService;
     }
 
-    public static synchronized ListCarCommand getInstance(Service<Car> carService) {
+    public static synchronized ListCarCommand getInstance(Service<Car, CreateCarRequest, UpdateCarRequest> carService) {
         if (instance == null) {
             instance = new ListCarCommand(carService);
         }
@@ -31,6 +33,6 @@ public class ListCarCommand implements Command {
             cars.forEach(System.out::println);
         }
 
-        return CarMenuCommand.getInstance().execute();
+        return CarMenuCommand.getInstance();
     }
 }

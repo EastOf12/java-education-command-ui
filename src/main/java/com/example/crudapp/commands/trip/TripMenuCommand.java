@@ -5,6 +5,10 @@ import com.example.crudapp.commands.Command;
 import com.example.crudapp.commands.MainMenuCommand;
 import com.example.crudapp.entites.trip.Trip;
 import com.example.crudapp.entites.user.User;
+import com.example.crudapp.requests.trip.CreateTripRequest;
+import com.example.crudapp.requests.trip.UpdateTripRequest;
+import com.example.crudapp.requests.user.CreateUserRequest;
+import com.example.crudapp.requests.user.UpdateUserRequest;
 import com.example.crudapp.services.ServiceInjector;
 import com.example.crudapp.services.ServiceKey;
 
@@ -12,11 +16,11 @@ import java.util.Scanner;
 
 public class TripMenuCommand implements Command {
     private static TripMenuCommand instance;
-    private final Service<Trip> tripService;
-    private final Service<User> userService;
+    private final Service<Trip, CreateTripRequest, UpdateTripRequest> tripService;
+    private final Service<User, CreateUserRequest, UpdateUserRequest> userService;
     private final Scanner scanner;
 
-    private TripMenuCommand(Service<Trip> tripService, Service<User> userService, Scanner scanner) {
+    private TripMenuCommand(Service<Trip, CreateTripRequest, UpdateTripRequest> tripService, Service<User, CreateUserRequest, UpdateUserRequest> userService, Scanner scanner) {
         this.userService = userService;
         this.tripService = tripService;
         this.scanner = scanner;
@@ -69,15 +73,15 @@ public class TripMenuCommand implements Command {
 
     private Command handleChoice(int choice) {
         return switch (choice) {
-            case 1 -> ListTripCommand.getInstance(tripService).execute();
-            case 2 -> CreateTripCommand.getInstance(tripService, userService, scanner).execute();
-            case 3 -> ReadTripCommand.getInstance(tripService, scanner).execute();
-            case 4 -> UpdateTripCommand.getInstance(tripService, userService, scanner).execute();
-            case 5 -> DeleteTripCommand.getInstance(tripService, scanner).execute();
-            case 0 -> MainMenuCommand.getInstance().execute();
+            case 1 -> ListTripCommand.getInstance(tripService);
+            case 2 -> CreateTripCommand.getInstance(tripService, userService, scanner);
+            case 3 -> ReadTripCommand.getInstance(tripService, scanner);
+            case 4 -> UpdateTripCommand.getInstance(tripService, scanner);
+            case 5 -> DeleteTripCommand.getInstance(tripService, scanner);
+            case 0 -> MainMenuCommand.getInstance();
             default -> {
                 System.out.println("Неверный выбор. Попробуйте снова.");
-                yield this.execute();
+                yield this;
             }
         };
     }

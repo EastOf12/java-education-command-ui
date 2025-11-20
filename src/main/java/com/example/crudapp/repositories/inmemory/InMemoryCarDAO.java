@@ -14,11 +14,13 @@ public class InMemoryCarDAO implements DAO<Car> {
     private final AtomicLong idGenerator = new AtomicLong(1);
 
     @Override
-    public void save(Car car) {
+    public boolean save(Car car) {
         if (car.getId() == null) {
             car.setId(idGenerator.getAndIncrement());
         }
         cars.put(car.getId(), car);
+
+        return true;
     }
 
     @Override
@@ -42,7 +44,12 @@ public class InMemoryCarDAO implements DAO<Car> {
     }
 
     @Override
-    public void delete(Long id) {
-        cars.remove(id);
+    public boolean delete(Long id) {
+        if(cars.containsKey(id)) {
+            cars.remove(id);
+            return true;
+        }
+
+        return false;
     }
 }

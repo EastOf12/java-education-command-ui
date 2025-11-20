@@ -36,22 +36,6 @@ public class UserAuth {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        UserAuth userAuth = (UserAuth) o;
-        return Objects.equals(password, userAuth.password) && Objects.equals(lastPasswordReset, userAuth.lastPasswordReset);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hashCode(password);
-        result = 31 * result + Objects.hashCode(lastPasswordReset);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "UserAuth{" +
                 "password='" + password + '\'' +

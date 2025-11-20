@@ -1,41 +1,31 @@
 package com.example.crudapp.commands.passenger;
 
 import com.example.crudapp.api.Service;
-import com.example.crudapp.builder.InteractiveBuilder;
+import com.example.crudapp.builder.RequestBuilder;
 import com.example.crudapp.commands.Command;
 import com.example.crudapp.entites.passanger.Passenger;
-import com.example.crudapp.entites.passanger.PassengerStatus;
-import com.example.crudapp.entites.trip.Trip;
-import com.example.crudapp.entites.user.User;
+import com.example.crudapp.requests.passenger.CreatePassengerRequest;
+import com.example.crudapp.requests.passenger.UpdatePassengerRequest;
 
-import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class CreatePassengerCommand implements Command {
     private static CreatePassengerCommand instance;
-    private final Service<Passenger> passengerService;
-    private final Service<User> userService;
-    private final Service<Trip> tripService;
+    private final Service<Passenger, CreatePassengerRequest, UpdatePassengerRequest> passengerService;
     private final Scanner scanner;
 
     private CreatePassengerCommand(
-            Service<Passenger> passengerService,
-            Service<User> userService,
-            Service<Trip> tripService,
+            Service<Passenger, CreatePassengerRequest, UpdatePassengerRequest> passengerService,
             Scanner scanner) {
         this.passengerService = passengerService;
-        this.userService = userService;
-        this.tripService = tripService;
         this.scanner = scanner;
     }
 
     public static synchronized CreatePassengerCommand getInstance(
-            Service<Passenger> passengerService,
-            Service<User> userService,
-            Service<Trip> tripService,
+            Service<Passenger, CreatePassengerRequest, UpdatePassengerRequest> passengerService,
             Scanner scanner) {
         if (instance == null) {
-            instance = new CreatePassengerCommand(passengerService, userService, tripService, scanner);
+            instance = new CreatePassengerCommand(passengerService, scanner);
         }
 
         return instance;
@@ -45,38 +35,21 @@ public class CreatePassengerCommand implements Command {
     public Command execute() {
         System.out.println("=== Создание пассажира ===");
 
-        InteractiveBuilder<Passenger> builder = new InteractiveBuilder<>(Passenger::new);
-        builder
+        CreatePassengerRequest createPassengerRequest = new RequestBuilder<>(CreatePassengerRequest::new)
                 .addField("Введите id пользователя, который хочет стать пассажиром: ",
-                        (scanner, passenger) -> passenger.setUser(userService.getById(Long.valueOf(scanner.nextLine()))))
+                        (sc, p) -> p.setUserId(Long.valueOf(sc.nextLine())))
                 .addField("Введите id поездки, к которой хочет присоединиться пассажир: ",
-                        (scanner, passenger) -> passenger.setTrip(tripService.getById(Long.valueOf(scanner.nextLine()))))
+                        (sc, p) -> p.setTripID(Long.valueOf(sc.nextLine())))
                 .addField("Укажите необходимое количество мест: ",
-                        (scanner, passenger) -> {
-                            int seats = 0;
-                            while (seats < 1) {
-                                try {
-                                    seats = Integer.parseInt(scanner.nextLine());
-                                } catch (NumberFormatException e) {
-                                    System.out.println("Количество мест указано не верно. Укажите повторно");
-                                }
-                            }
-                            passenger.setSeats(seats);
-                        })
+                        (sc, p) -> p.setSeats(Integer.parseInt(sc.nextLine())))
                 .addField("Укажите сообщение для водителя: ",
-                        (scanner, passenger) -> passenger.setMessage(scanner.nextLine()));
+                        (sc, p) -> p.setMessage(sc.nextLine()))
+                .build(scanner);
 
-        Passenger passenger = builder.build(scanner);
-        passenger.setCreatedAt(LocalDateTime.now());
-
-        PassengerStatus passengerStatus = new PassengerStatus();
-        passengerStatus.setStatus("new");
-        passenger.setPassengerStatus(passengerStatus);
-
-        passengerService.save(passenger);
+        Passenger passenger = passengerService.save(createPassengerRequest);
         System.out.println("Пассажир создан с ID: " + passenger.getId());
         System.out.println(passenger);
 
-        return PassengerMenuCommand.getInstance().execute();
+        return PassengerMenuCommand.getInstance();
     }
 }

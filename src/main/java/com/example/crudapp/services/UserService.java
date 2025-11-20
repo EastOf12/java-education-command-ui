@@ -32,7 +32,7 @@ public class UserService implements Service<User, CreateUserRequest, UpdateUserR
     public User save(CreateUserRequest createUserRequest) {
         User user = UserMapper.mapToNewUser(createUserRequest);
 
-        if(userDAO.save(user)) {
+        if (userDAO.save(user)) {
             return user;
         } else {
             System.out.println("Ошибка при сохранении пользователя");
@@ -41,16 +41,16 @@ public class UserService implements Service<User, CreateUserRequest, UpdateUserR
     }
 
     @Override
-    public User update(Long id,UpdateUserRequest updateUserRequest) {
+    public User update(Long id, UpdateUserRequest updateUserRequest) {
         User updateUser = getById(id);
 
-        if(updateUser == null) {
+        if (updateUser == null) {
             throw new NotFoundException("Пользователь с ID " + id + " не найден.");
         }
 
         User user = UserMapper.mapToUpdateUser(updateUser, updateUserRequest);
 
-        if(userDAO.update(user)) {
+        if (userDAO.update(user)) {
             return user;
         } else {
             System.out.println("Ошибка при обновлении пользователя");
@@ -59,7 +59,7 @@ public class UserService implements Service<User, CreateUserRequest, UpdateUserR
     }
 
     @Override
-    public void delete(Long id) {
-        userDAO.delete(id);
+    public boolean delete(Long id) {
+        return userDAO.delete(id);
     }
 }

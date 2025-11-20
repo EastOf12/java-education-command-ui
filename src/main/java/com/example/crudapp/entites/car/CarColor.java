@@ -21,20 +21,6 @@ public class CarColor {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        CarColor color = (CarColor) o;
-        return Objects.equals(name, color.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(name);
-    }
-
-    @Override
     public String toString() {
         return "CarColor{" +
                 "name='" + name + '\'' +

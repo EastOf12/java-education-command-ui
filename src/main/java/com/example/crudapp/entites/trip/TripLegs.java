@@ -57,24 +57,6 @@ public class TripLegs {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        TripLegs tripLegs = (TripLegs) o;
-        return Objects.equals(departure, tripLegs.departure) && Objects.equals(arrival, tripLegs.arrival) && Objects.equals(departureDateTime, tripLegs.departureDateTime) && Objects.equals(arrivalDateTime, tripLegs.arrivalDateTime);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hashCode(departure);
-        result = 31 * result + Objects.hashCode(arrival);
-        result = 31 * result + Objects.hashCode(departureDateTime);
-        result = 31 * result + Objects.hashCode(arrivalDateTime);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "TripLegs{" +
                 "departure='" + departure + '\'' +

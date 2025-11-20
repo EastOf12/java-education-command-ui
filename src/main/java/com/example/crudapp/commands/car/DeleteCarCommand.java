@@ -4,20 +4,22 @@ import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
 import com.example.crudapp.commands.Confirm;
 import com.example.crudapp.entites.car.Car;
+import com.example.crudapp.requests.car.CreateCarRequest;
+import com.example.crudapp.requests.car.UpdateCarRequest;
 
 import java.util.Scanner;
 
 public class DeleteCarCommand implements Command {
     private static DeleteCarCommand instance;
-    private final Service<Car> carService;
+    private final Service<Car, CreateCarRequest, UpdateCarRequest> carService;
     private final Scanner scanner;
 
-    private DeleteCarCommand(Service<Car> carService, Scanner scanner) {
+    private DeleteCarCommand(Service<Car, CreateCarRequest, UpdateCarRequest> carService, Scanner scanner) {
         this.carService = carService;
         this.scanner = scanner;
     }
 
-    public static synchronized DeleteCarCommand getInstance(Service<Car> carService, Scanner scanner) {
+    public static synchronized DeleteCarCommand getInstance(Service<Car, CreateCarRequest, UpdateCarRequest> carService, Scanner scanner) {
         if (instance == null) {
             instance = new DeleteCarCommand(carService, scanner);
         }
@@ -37,8 +39,11 @@ public class DeleteCarCommand implements Command {
                 System.out.print("Подтвердите удаление (y/n): ");
                 String confirm = scanner.nextLine();
                 if (Confirm.valueOf(confirm).equals(Confirm.y)) {
-                    carService.delete(id);
-                    System.out.println("Автомобиль удален");
+                    if(carService.delete(id)) {
+                        System.out.println("Автомобиль удален");
+                    } else {
+                        System.out.println("Ошибка при удалении автомобиля");
+                    }
                 } else {
                     System.out.println("Удаление отменено");
                 }
@@ -49,6 +54,6 @@ public class DeleteCarCommand implements Command {
             System.out.println("Неверный формат ID");
         }
 
-        return CarMenuCommand.getInstance().execute();
+        return CarMenuCommand.getInstance();
     }
 }

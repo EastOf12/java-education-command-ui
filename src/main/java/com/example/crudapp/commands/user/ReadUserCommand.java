@@ -3,24 +3,22 @@ package com.example.crudapp.commands.user;
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
 import com.example.crudapp.entites.user.User;
+import com.example.crudapp.requests.user.CreateUserRequest;
+import com.example.crudapp.requests.user.UpdateUserRequest;
 
 import java.util.Scanner;
 
 public class ReadUserCommand implements Command {
-    private static ReadUserCommand instance;
-    private final Service<User> userService;
+    private final Service<User, CreateUserRequest, UpdateUserRequest> userService;
     private final Scanner scanner;
 
-    private ReadUserCommand(Service<User> userService, Scanner scanner) {
+    private ReadUserCommand(Service<User, CreateUserRequest, UpdateUserRequest> userService, Scanner scanner) {
         this.userService = userService;
         this.scanner = scanner;
     }
 
-    public static synchronized ReadUserCommand getInstance(Service<User> userService, Scanner scanner) {
-        if (instance == null) {
-            instance = new ReadUserCommand(userService, scanner);
-        }
-        return instance;
+    public static synchronized ReadUserCommand getInstance(Service<User, CreateUserRequest, UpdateUserRequest> userService, Scanner scanner) {
+        return new ReadUserCommand(userService, scanner);
     }
 
     @Override
@@ -39,6 +37,6 @@ public class ReadUserCommand implements Command {
             System.out.println("Неверный формат ID");
         }
 
-        return UserMenuCommand.getInstance().execute();
+        return UserMenuCommand.getInstance();
     }
 }

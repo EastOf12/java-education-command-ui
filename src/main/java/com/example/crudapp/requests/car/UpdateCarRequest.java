@@ -3,6 +3,8 @@ package com.example.crudapp.requests.car;
 import com.example.crudapp.entites.car.CarBrand;
 import com.example.crudapp.entites.car.CarColor;
 
+import java.util.Objects;
+
 public class UpdateCarRequest {
     private String number;
     private Integer maxSeat;
@@ -42,5 +44,15 @@ public class UpdateCarRequest {
 
     public void setBrand(CarBrand brand) {
         this.brand = brand;
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateCarRequest{" +
+                "number='" + number + '\'' +
+                ", maxSeat=" + maxSeat +
+                ", color=" + color +
+                ", brand=" + brand +
+                '}';
     }
 }

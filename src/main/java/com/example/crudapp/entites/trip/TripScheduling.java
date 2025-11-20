@@ -36,22 +36,6 @@ public class TripScheduling {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        TripScheduling that = (TripScheduling) o;
-        return Objects.equals(planedDepartureDateTime, that.planedDepartureDateTime) && Objects.equals(planedArrivalDateTime, that.planedArrivalDateTime);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hashCode(planedDepartureDateTime);
-        result = 31 * result + Objects.hashCode(planedArrivalDateTime);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "TripScheduling{" +
                 "planedDepartureDateTime=" + planedDepartureDateTime +

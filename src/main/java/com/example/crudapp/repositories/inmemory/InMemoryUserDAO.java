@@ -15,11 +15,13 @@ public class InMemoryUserDAO implements DAO<User> {
     private final AtomicLong idGenerator = new AtomicLong(1);
 
     @Override
-    public void save(User user) {
+    public boolean save(User user) {
         if (user.getId() == null) {
             user.setId(idGenerator.getAndIncrement());
         }
         users.put(user.getId(), user);
+
+        return true;
     }
 
     @Override
@@ -43,7 +45,12 @@ public class InMemoryUserDAO implements DAO<User> {
     }
 
     @Override
-    public void delete(Long id) {
-        users.remove(id);
+    public boolean delete(Long id) {
+        if(users.containsKey(id)) {
+            users.remove(id);
+            return true;
+        }
+
+        return false;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.crudapp.entites.car;
 
+import com.example.crudapp.ObjectUtils;
 import com.example.crudapp.api.Entity;
 
 import java.util.Objects;
@@ -64,21 +65,12 @@ public class Car extends Entity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Car car = (Car) o;
-        return maxSeat == car.maxSeat && Objects.equals(number, car.number) && Objects.equals(color, car.color) && Objects.equals(brand, car.brand) && Objects.equals(userid, car.userid);
+        return ObjectUtils.equals(this, o, "number", "maxSeat", "color", "brand", "userid");
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hashCode(number);
-        result = 31 * result + maxSeat;
-        result = 31 * result + Objects.hashCode(color);
-        result = 31 * result + Objects.hashCode(brand);
-        result = 31 * result + Objects.hashCode(userid);
-        return result;
+        return ObjectUtils.hashCode(this, "number", "maxSeat", "color", "brand", "userid");
     }
 
     @Override

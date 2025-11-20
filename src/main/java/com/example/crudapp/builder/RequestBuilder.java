@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-public class RequestBuilder <T>{
+public class RequestBuilder<T> {
     private final Supplier<T> factory;
     private final List<FieldInput<T>> fields = new ArrayList<>();
 

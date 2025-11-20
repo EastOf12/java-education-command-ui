@@ -15,5 +15,5 @@ public interface Service<
 
     T update(Long id, U updateRequest);
 
-    void delete(Long id);
+    boolean delete(Long id);
 }

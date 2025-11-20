@@ -3,7 +3,10 @@ package com.example.crudapp.commands.user;
 import com.example.crudapp.api.Service;
 import com.example.crudapp.builder.RequestBuilder;
 import com.example.crudapp.commands.Command;
-import com.example.crudapp.entites.user.*;
+import com.example.crudapp.entites.user.Gender;
+import com.example.crudapp.entites.user.User;
+import com.example.crudapp.entites.user.UserAuth;
+import com.example.crudapp.entites.user.UserContacts;
 import com.example.crudapp.requests.user.CreateUserRequest;
 import com.example.crudapp.requests.user.UpdateUserRequest;
 
@@ -23,11 +26,14 @@ public class CreateUserCommand implements Command {
         this.scanner = scanner;
     }
 
-    public static synchronized CreateUserCommand getInstance(Service<User, CreateUserRequest, UpdateUserRequest> userService, Scanner scanner) {
+    public static synchronized CreateUserCommand getInstance(
+            Service<User, CreateUserRequest, UpdateUserRequest> userService,
+            Scanner scanner) {
         if (instance == null) {
             instance = new CreateUserCommand(userService, scanner);
         }
-        return instance;
+
+        return new CreateUserCommand(userService, scanner);
     }
 
     @Override
@@ -53,9 +59,9 @@ public class CreateUserCommand implements Command {
                     LocalDate date = null;
 
                     while (date == null) {
-                        System.out.print(u);
                         try {
-                            date = LocalDate.parse(scanner.nextLine(), formatter);
+                            date = LocalDate.parse(sc.nextLine(), formatter);
+                            u.setBirthday(date);
                         } catch (DateTimeParseException e) {
                             System.out.println("Ошибка: неверный формат даты. Пожалуйста, введите дату в формате " + pattern + ".");
                         }
@@ -87,6 +93,6 @@ public class CreateUserCommand implements Command {
         System.out.println("Пользователь создан с ID: " + user.getId());
         System.out.println(user);
 
-        return UserMenuCommand.getInstance().execute();
+        return UserMenuCommand.getInstance();
     }
 }

@@ -3,17 +3,19 @@ package com.example.crudapp.commands.trip;
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
 import com.example.crudapp.entites.trip.Trip;
+import com.example.crudapp.requests.trip.CreateTripRequest;
+import com.example.crudapp.requests.trip.UpdateTripRequest;
 
 public class ListTripCommand implements Command {
 
     private static ListTripCommand instance;
-    private final Service<Trip> tripService;
+    private final Service<Trip, CreateTripRequest, UpdateTripRequest> tripService;
 
-    private ListTripCommand(Service<Trip> tripService) {
+    private ListTripCommand(Service<Trip, CreateTripRequest, UpdateTripRequest> tripService) {
         this.tripService = tripService;
     }
 
-    public static synchronized ListTripCommand getInstance(Service<Trip> tripService) {
+    public static synchronized ListTripCommand getInstance(Service<Trip, CreateTripRequest, UpdateTripRequest> tripService) {
         if (instance == null) {
             instance = new ListTripCommand(tripService);
         }
@@ -30,6 +32,6 @@ public class ListTripCommand implements Command {
             trips.forEach(System.out::println);
         }
 
-        return TripMenuCommand.getInstance().execute();
+        return TripMenuCommand.getInstance();
     }
 }

@@ -4,21 +4,23 @@ import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
 import com.example.crudapp.commands.Confirm;
 import com.example.crudapp.entites.passanger.Passenger;
+import com.example.crudapp.requests.passenger.CreatePassengerRequest;
+import com.example.crudapp.requests.passenger.UpdatePassengerRequest;
 
 import java.util.Scanner;
 
 public class DeletePassengerCommand implements Command {
     private static DeletePassengerCommand instance;
-    private final Service<Passenger> passengerService;
+    private final Service<Passenger, CreatePassengerRequest, UpdatePassengerRequest> passengerService;
     private final Scanner scanner;
 
-    private DeletePassengerCommand(Service<Passenger> passengerService, Scanner scanner) {
+    private DeletePassengerCommand(Service<Passenger, CreatePassengerRequest, UpdatePassengerRequest> passengerService, Scanner scanner) {
         this.passengerService = passengerService;
         this.scanner = scanner;
     }
 
     public static synchronized DeletePassengerCommand getInstance(
-            Service<Passenger> passengerService, Scanner scanner) {
+            Service<Passenger, CreatePassengerRequest, UpdatePassengerRequest> passengerService, Scanner scanner) {
         if (instance == null) {
             instance = new DeletePassengerCommand(passengerService, scanner);
         }
@@ -38,8 +40,11 @@ public class DeletePassengerCommand implements Command {
                 System.out.print("Подтвердите удаление (y/n): ");
                 String confirm = scanner.nextLine();
                 if (Confirm.valueOf(confirm).equals(Confirm.y)) {
-                    passengerService.delete(id);
-                    System.out.println("Пассажир удален");
+                    if(passengerService.delete(id)) {
+                        System.out.println("Пассажир удален");
+                    } else {
+                        System.out.println("Ошибка при удалении пассажира");
+                    }
                 } else {
                     System.out.println("Удаление отменено");
                 }
@@ -50,6 +55,6 @@ public class DeletePassengerCommand implements Command {
             System.out.println("Неверный формат ID");
         }
 
-        return PassengerMenuCommand.getInstance().execute();
+        return PassengerMenuCommand.getInstance();
     }
 }

@@ -1,17 +1,16 @@
 package com.example.crudapp.entites.passanger;
 
+import com.example.crudapp.ObjectUtils;
 import com.example.crudapp.api.Entity;
-import com.example.crudapp.entites.trip.Trip;
-import com.example.crudapp.entites.user.User;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 
 public class Passenger extends Entity {
-    private User user;
+    private Long userId;
     private PassengerStatus passengerStatus;
-    private Trip trip;
+    private Long tripID;
     private LocalDateTime createdAt;
     private int seats;
     private String message;
@@ -19,21 +18,21 @@ public class Passenger extends Entity {
     public Passenger() {
     }
 
-    public Passenger(User user, PassengerStatus passengerStatus, Trip trip, LocalDateTime createdAt, int seats, String message) {
-        this.user = user;
-        this.passengerStatus = passengerStatus;
-        this.trip = trip;
-        this.createdAt = createdAt;
+    public Passenger(Long userId, Long tripID, int seats, String message) {
+        this.userId = userId;
+        this.passengerStatus = new PassengerStatus("new");
+        this.tripID = tripID;
+        this.createdAt = LocalDateTime.now();
         this.seats = seats;
         this.message = message;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUser() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Long userId) {
+        this.userId = userId;
     }
 
     public PassengerStatus getPassengerStatus() {
@@ -44,12 +43,12 @@ public class Passenger extends Entity {
         this.passengerStatus = passengerStatus;
     }
 
-    public Trip getTrip() {
-        return trip;
+    public Long getTrip() {
+        return tripID;
     }
 
-    public void setTrip(Trip trip) {
-        this.trip = trip;
+    public void setTrip(Long tripID) {
+        this.tripID = tripID;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -78,30 +77,20 @@ public class Passenger extends Entity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Passenger passenger = (Passenger) o;
-        return seats == passenger.seats && Objects.equals(user, passenger.user) && Objects.equals(passengerStatus, passenger.passengerStatus) && Objects.equals(trip, passenger.trip) && Objects.equals(createdAt, passenger.createdAt) && Objects.equals(message, passenger.message);
+        return ObjectUtils.equals(this, o, "userId", "passengerStatus", "tripID", "createdAt", "seats", "message");
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hashCode(user);
-        result = 31 * result + Objects.hashCode(passengerStatus);
-        result = 31 * result + Objects.hashCode(trip);
-        result = 31 * result + Objects.hashCode(createdAt);
-        result = 31 * result + seats;
-        result = 31 * result + Objects.hashCode(message);
-        return result;
+        return ObjectUtils.hashCode(this,"userId", "passengerStatus", "tripID", "createdAt", "seats", "message");
     }
 
     @Override
     public String toString() {
         return "Passenger{" +
-                "user=" + user +
+                "userId=" + userId +
                 ", passengerStatus=" + passengerStatus +
-                ", trip=" + trip +
+                ", tripID=" + tripID +
                 ", createdAt=" + createdAt +
                 ", seats=" + seats +
                 ", message='" + message + '\'' +

@@ -3,9 +3,9 @@ package com.example.crudapp.requests.user;
 import com.example.crudapp.entites.user.Gender;
 import com.example.crudapp.entites.user.UserAuth;
 import com.example.crudapp.entites.user.UserContacts;
-import com.example.crudapp.entites.user.UserRole;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class CreateUserRequest {
     private String firstName;
@@ -70,5 +70,18 @@ public class CreateUserRequest {
 
     public void setUserAuth(UserAuth userAuth) {
         this.userAuth = userAuth;
+    }
+
+    @Override
+    public String toString() {
+        return "CreateUserRequest{" +
+                "firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender=" + gender +
+                ", birthday=" + birthday +
+                ", userContacts=" + userContacts +
+                ", userAuth=" + userAuth +
+                '}';
     }
 }

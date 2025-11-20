@@ -3,10 +3,14 @@ package com.example.crudapp.services;
 import com.example.crudapp.api.DAO;
 import com.example.crudapp.api.Service;
 import com.example.crudapp.entites.passanger.Passenger;
+import com.example.crudapp.exception.NotFoundException;
+import com.example.crudapp.mappers.PassengerMapper;
+import com.example.crudapp.requests.passenger.CreatePassengerRequest;
+import com.example.crudapp.requests.passenger.UpdatePassengerRequest;
 
 import java.util.List;
 
-public class PassengerService implements Service<Passenger> {
+public class PassengerService implements Service<Passenger, CreatePassengerRequest, UpdatePassengerRequest> {
     private final DAO<Passenger> passengerDAO;
 
     public PassengerService(DAO<Passenger> tripDAO) {
@@ -24,17 +28,37 @@ public class PassengerService implements Service<Passenger> {
     }
 
     @Override
-    public void save(Passenger passenger) {
-        passengerDAO.save(passenger);
+    public Passenger save(CreatePassengerRequest createPassengerRequest) {
+        Passenger passenger = PassengerMapper.mapToNewPassenger(createPassengerRequest);
+
+        if (passengerDAO.save(passenger)) {
+            return passenger;
+        } else {
+            System.out.println("Ошибка при сохранении пассажира");
+            return null;
+        }
     }
 
     @Override
-    public boolean update(Passenger passenger) {
-        return passengerDAO.update(passenger);
+    public Passenger update(Long id, UpdatePassengerRequest updatePassengerRequest) {
+        Passenger passenger = getById(id);
+
+        if (passenger == null) {
+            throw new NotFoundException("Пассажир с ID " + id + " не найден.");
+        }
+
+        Passenger updatePassenger = PassengerMapper.mapToUpdateUser(passenger, updatePassengerRequest);
+
+        if (passengerDAO.update(updatePassenger)) {
+            return updatePassenger;
+        } else {
+            System.out.println("Ошибка при обновлении пассажира");
+            return null;
+        }
     }
 
     @Override
-    public void delete(Long id) {
-        passengerDAO.delete(id);
+    public boolean delete(Long id) {
+        return passengerDAO.delete(id);
     }
 }

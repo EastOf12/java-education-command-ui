@@ -18,8 +18,8 @@ public class UpdateUserRequest {
     private UserAuth userAuth;
 
     public UpdateUserRequest() {
-        userRole = new UserRole();
         userAuth = new UserAuth();
+        userContacts = new UserContacts();
     }
 
     public UserRole getUserRole() {
@@ -84,5 +84,19 @@ public class UpdateUserRequest {
 
     public void setUserAuth(UserAuth userAuth) {
         this.userAuth = userAuth;
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateUserRequest{" +
+                "firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender=" + gender +
+                ", birthday=" + birthday +
+                ", userContacts=" + userContacts +
+                ", userRole=" + userRole +
+                ", userAuth=" + userAuth +
+                '}';
     }
 }

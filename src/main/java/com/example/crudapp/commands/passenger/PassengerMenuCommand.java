@@ -3,9 +3,16 @@ package com.example.crudapp.commands.passenger;
 import com.example.crudapp.api.Service;
 import com.example.crudapp.commands.Command;
 import com.example.crudapp.commands.ExitCommand;
+import com.example.crudapp.commands.MainMenuCommand;
 import com.example.crudapp.entites.passanger.Passenger;
 import com.example.crudapp.entites.trip.Trip;
 import com.example.crudapp.entites.user.User;
+import com.example.crudapp.requests.passenger.CreatePassengerRequest;
+import com.example.crudapp.requests.passenger.UpdatePassengerRequest;
+import com.example.crudapp.requests.trip.CreateTripRequest;
+import com.example.crudapp.requests.trip.UpdateTripRequest;
+import com.example.crudapp.requests.user.CreateUserRequest;
+import com.example.crudapp.requests.user.UpdateUserRequest;
 import com.example.crudapp.services.ServiceInjector;
 import com.example.crudapp.services.ServiceKey;
 
@@ -13,15 +20,15 @@ import java.util.Scanner;
 
 public class PassengerMenuCommand implements Command {
     private static PassengerMenuCommand instance;
-    private final Service<Passenger> passengerService;
-    private final Service<User> userService;
-    private final Service<Trip> tripService;
+    private final Service<Passenger, CreatePassengerRequest, UpdatePassengerRequest> passengerService;
+    private final Service<User, CreateUserRequest, UpdateUserRequest> userService;
+    private final Service<Trip, CreateTripRequest, UpdateTripRequest> tripService;
     private final Scanner scanner;
 
     private PassengerMenuCommand(
-            Service<Passenger> passengerService,
-            Service<User> userService,
-            Service<Trip> tripService,
+            Service<Passenger, CreatePassengerRequest, UpdatePassengerRequest> passengerService,
+            Service<User, CreateUserRequest, UpdateUserRequest> userService,
+            Service<Trip, CreateTripRequest, UpdateTripRequest> tripService,
             Scanner scanner) {
         this.tripService = tripService;
         this.userService = userService;
@@ -76,15 +83,15 @@ public class PassengerMenuCommand implements Command {
 
     private Command handleChoice(int choice) {
         return switch (choice) {
-            case 1 -> ListPassengerCommand.getInstance(passengerService).execute();
-            case 2 -> CreatePassengerCommand.getInstance(passengerService, userService, tripService, scanner).execute();
-            case 3 -> ReadPassengerCommand.getInstance(passengerService, scanner).execute();
-            case 4 -> UpdatePassengerCommand.getInstance(passengerService, scanner).execute();
-            case 5 -> DeletePassengerCommand.getInstance(passengerService, scanner).execute();
-            case 0 -> ExitCommand.getInstance(scanner).execute();
+            case 1 -> ListPassengerCommand.getInstance(passengerService);
+            case 2 -> CreatePassengerCommand.getInstance(passengerService, scanner);
+            case 3 -> ReadPassengerCommand.getInstance(passengerService, scanner);
+            case 4 -> UpdatePassengerCommand.getInstance(passengerService, scanner);
+            case 5 -> DeletePassengerCommand.getInstance(passengerService, scanner);
+            case 0 -> MainMenuCommand.getInstance();
             default -> {
                 System.out.println("Неверный выбор. Попробуйте снова.");
-                yield this.execute();
+                yield this;
             }
         };
     }
